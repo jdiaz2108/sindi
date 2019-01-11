@@ -2,12 +2,12 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li class="{{ request()->is('/') ? 'active' : '' }}">
                         <a href="/"><i class="menu-icon fa fa-laptop"></i>Inicio </a>
                     </li>
                     <li class="menu-title">UI elements</li><!-- /.menu-title -->
 @if(Auth::user()->level >= 355)
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('U/*') ? 'active' : '' }} {{ request()->is('U') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-address-book"></i>Usuarios</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-address-book"></i><a href="/U">Listar Usuarios</a></li>

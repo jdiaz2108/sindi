@@ -2,10 +2,12 @@
     <div class="card" id="detailsCard">
         <div class="card-header">
             <label class="label label-default align-baseline font-weight-bold">Información básica</label>
+            <div v-if="level >= 355">
                 <a v-if="status == 'ver'" role="button" @click="status = 'editar'" class="btn btn-primary float-right text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-            <div v-if="status == 'editar'">
-                <a role="button" @click="status = 'ver'" class="btn btn-danger float-right text-white mx-1">Cancelar</a>
-                <a role="button" @click="Update()" class="btn btn-warning float-right mx-1">Guardar</a>
+                <div v-if="status == 'editar'">
+                    <a role="button" @click="status = 'ver'" class="btn btn-danger float-right text-white mx-1">Cancelar</a>
+                    <a role="button" @click="Update()" class="btn btn-warning float-right mx-1">Guardar</a>
+                </div>
             </div>
         </div>
         <div class="card-body" id="detailsBody">
@@ -69,10 +71,10 @@
                     </div>
                 </dd>
             </dl>
-            <dl class="row my-0">
+<!--             <dl class="row my-0">
                 <dt class="col-md-12 col-lg-12"><label>Permisos:</label></dt>
                 <dd class="col-md-12 col-lg-12"><label class="label label-default " for="profile_id">$user->profile->name</label></dd>
-            </dl>
+            </dl> -->
         </div>
     </div>
 </template>

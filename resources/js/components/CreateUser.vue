@@ -78,12 +78,12 @@
                       .then(response => {
                         console.log(response);
                         window.location.href = '/U/' + response.data;
-                        this.Swal('ok');
+                        this.Swal('Creando Usuario');
                       })
                       .catch(error => {
-                        this.errors = error.response.data;
-                    console.log(error)
-                  })
+                          this.errors = error.response.data;
+                          console.log(error)
+                        })
             },
             Swal: function(texto) {
                 Swal({

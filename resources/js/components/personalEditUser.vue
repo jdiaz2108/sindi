@@ -74,13 +74,13 @@
                 <dl class="row">
                     <dt class="col-md-12 col-lg-5">Nivel educativo:</dt>
                     <dd class="col-md-12 col-lg-7">
-                        <div v-if="status == 'ver'">
+                        <div v-if="(status == 'ver' || level < 355)">
                             <label class="label label-default">
                             <div v-for="academicLevel in allAcademicLevel" v-if="dataPersonal.academic_level_id == academicLevel.id">{{ academicLevel.name }}</div>
                             </label>
                         </div>
 
-                        <div class="form-group" v-if="status == 'editar'">
+                        <div class="form-group" v-if="(level >= 355 && status == 'editar')">
                             <select v-model="dataPersonal.academic_level_id" class="form-control" >
                                 <option  v-for="academicLevel in allAcademicLevel" v-bind:value="academicLevel.id">{{ academicLevel.name }}</option>
                             </select>
@@ -93,7 +93,7 @@
                 <dl class="row">
                     <dt class="col-md-12 col-lg-5">Estudiante activo:</dt>
                     <dd class="col-md-12 col-lg-7">
-                        <div v-if="status == 'ver'">
+                        <div v-if="(status == 'ver' || level < 355)">
                             <label class="label label-default " for="studing">
                                 <button v-if="dataPersonal.studing == true" type="button" class="btn btn-success">Si</button>
                                 <button v-else type="button" class="btn btn-secondary">No</button>

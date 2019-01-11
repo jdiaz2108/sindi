@@ -39,11 +39,15 @@ class VueController extends Controller
 
     public function getCorreo(Request $request, $id)
     {
+
         if($request->ajax()){
             $user = User::select('name', 'email')->whereDocument($id)->first();
-            if ($user) { $data = $user;
-            } else { $data = null; }
-            return response()->json([ 'name' => $data->name, 'email' => $data->email ], 200);
+            if ($user) { 
+                $data = $user;
+                return response()->json([ 'name' => $data->name, 'email' => $data->email ], 200);
+            } else { 
+                return response()->json([ 'error' => 'Usuario no Encontrado' ], 404);
+             }
         } else { return redirect('/'); }
     }
 

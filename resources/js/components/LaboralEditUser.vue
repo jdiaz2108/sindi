@@ -200,14 +200,15 @@
                     </dl>
                 </div>
             </div>
-
-            <div v-if="(level >= 355 && status == 'ver')">
+        <div v-if="level >= 355">
+            <div v-if="status == 'ver'">
                 <a  role="button" @click="status = 'editar'" class="btn btn-primary text-light float-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
             </div>
             <div v-if="status == 'editar'">
                 <a role="button" @click="status = 'ver'" class="btn btn-danger float-right text-white mx-1">Cancelar</a>
                 <a role="button" @click="Update()" class="btn btn-warning float-right mx-1">Guardar</a>
             </div>
+        </div>
         </div>
     </div>
 </template>

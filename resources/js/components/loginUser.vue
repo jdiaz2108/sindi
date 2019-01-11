@@ -12,8 +12,6 @@
                             <form method="POST" class="align-middle form-group" @submit.prevent>
                                 <input type="hidden" name="_token" :value="csrf">
 
-                                <label class="alert alert-danger" id="errorMsg" style="display: none"></label>
-
                                 <div class="row">
                                     <template v-if="loginType === 'id'">
 
@@ -29,14 +27,7 @@
 
 
                                             <div class="form-group col-md-8 mx-auto">
-                                                <input v-model="documento" id="document" type="document"
-                                                       class="form-control" @keypress.enter="getCorreo()"
-                                                       name="document" required autofocus>
-
-                                                    <span class="invalid-feedback">
-                                                        <strong></strong>
-                                                    </span>
-
+                                                <input v-model="documento" name="document" type="text" class="form-control" @keypress.enter="getCorreo()" required ref="document">
                                             </div>
 
                                             <div class="col-md-8 text-center mx-auto">
@@ -45,22 +36,21 @@
 
                                     </template>
 
-                                    <template v-if="loginType === 'password'" >
-
+                                    <template v-if="loginType === 'password'">
+                                       <!--      ({{setFocus()}}) -->
                                             <h4 class="text-secondary mx-auto text-center col-8">{{ correo.name }}</h4>
 
                                             <h5 class="text-secondary mx-auto text-center col-8">Ingresa tu Contraseña</h5>
 
+
+
+
                                             <div class="form-group col-md-8 mx-auto">
-                                                <input id="password2" type="password"
-                                                           class="form-control" @keypress.enter="tryLogin()"
-                                                           name="password2" v-model="password" required autofocus>
-
-                                                    <span class="invalid-feedback">
-                                                        <strong></strong>
-                                                    </span>
-
+                                                <input type="password" class="form-control" @keypress.enter="tryLogin()" v-model="password" required autofocus>
                                             </div>
+
+
+
 
                                             <div class="col-md-8 text-center mx-auto my-3">
                                                 <button type="button" class="btn btn-primary btn-lg" @click="tryLogin()">Iniciar Sesión</button>
@@ -85,10 +75,6 @@
                     </div>
                 </div>
 
-                <pre>
-                    <!-- {{$data}} -->
-                    
-                </pre>
 
             </div>
         </div>
@@ -103,9 +89,18 @@
         created(){
             this.getDocumento();
         },
+        mounted(){ 
+            this.setFocus(); 
+        },
         data(){
             return {
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                errors: {
+                    errors: {
+                        email: [],
+                        password: []
+                    },
+                },
                 tipodocumento: null,
                 selected: 1,
                 documento: null,
@@ -118,15 +113,18 @@
             }
         },
         methods: {
+            setFocus: function()
+            {
+              this.$refs.document.focus();
+            },
             getDocumento: function() {
                 axios
-                  .get('/tiposDocumento')
+                  .get('/Data/tiposDocumento')
                   .then(response => {
                     this.tipodocumento = response.data
                   })
                   .catch(error => {
                     console.log(error)
-                    this.errored = true
                   })
             },
             getCorreo: function() {
@@ -136,16 +134,11 @@
                     this.correo = response.data
                     this.loginType = 'password'
                   })
-                  .catch(error => {
+                .catch(error => {
+                    this.errors = error.response.data;
+                        this.Swal(this.errors.error, 'error');
                     console.log(error)
-                    Swal({
-                          position: 'top-end',
-                          type: 'error',
-                          title: 'No Existe el documento: '+ this.documento +' en nuestro sistema',
-                          showConfirmButton: false,
-                          timer: 2000
-                        })
-                  })
+                    })
             },
             loginChange: function() {
                     this.loginType = 'id'
@@ -161,18 +154,27 @@
                     window.location.href = '/';
                     
                   })
-                    .catch(function (error) {
-                        Swal({
-                          position: 'top-end',
-                          type: 'error',
-                          title: 'Error acceso, Intente de nuevo',
-                          showConfirmButton: false,
-                          timer: 1500
+                    .catch(error => {
+                        this.errors = error.response.data;
+                            if (this.errors.errors.email) {
+                                this.Swal(this.errors.errors.email[0], 'error');
+                            }
+                            if (this.errors.errors.password) {
+                                this.Swal(this.errors.errors.password[0], 'error');
+                            }
+                        console.log(error)
                         })
-                });
 
 
-            }
+            },
+            Swal: function(texto, type) {
+                Swal({
+                        type: type,
+                        title: texto,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+            },
 
         }
     }

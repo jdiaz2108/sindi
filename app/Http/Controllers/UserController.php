@@ -19,8 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('admin.user.listar', compact('users'));
+        $employees = Employee::with('user', 'position', 'city')->get();
+        return view('admin.user.listar', compact('employees'));
     }
 
     /**
@@ -41,12 +41,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        // 'document' => 'required|unique:users|max:255',
-        // 'name' => 'required',
-        // 'email' => 'required|unique:users',
-        // 'last_name' => 'required',
-        // ]);
+        $request->validate([
+            'document' => 'required|unique:users|max:255',
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'last_name' => 'required',
+        ]);
 
         $user = User::create([
             'name' => $request->name,

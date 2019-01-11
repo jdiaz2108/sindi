@@ -37,6 +37,11 @@ class Employee extends Model
         return $this->belongsTo('App\Models\Arl');
     }
 
+    public function city()
+    {
+        return $this->belongsTo('App\Models\City');
+    }
+
     public function position()
     {
         return $this->belongsTo('App\Models\Position');

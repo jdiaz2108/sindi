@@ -10,9 +10,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -123,21 +122,21 @@
         <!-- Fn Barra Superior -->
 
         <div class="breadcrumbs">
-            <div class="breadcrumbs-inner">
+            <div class="breadcrumbs-inner shadow rounded blue-gradient">
                 <div class="row m-0">
                     <div class="col-sm-4">
-                        <div class="page-header float-left">
-                            <div class="page-title">
+                        <div class="page-header float-left bg-transparent">
+                            <div class="page-title text-white">
                                 <h1>Dashboard</h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-8">
-                        <div class="page-header float-right">
+                        <div class="page-header float-right bg-transparent text-white">
                             <div class="page-title">
-                                <ol class="breadcrumb text-right">
-                                    <li><a href="#">Dashboard</a></li>
-                                    <li><a href="#">Forms</a></li>
+                                <ol class="breadcrumb text-right bg-transparent text-white">
+                                    <li><a href="/" class="text-light">Inicio</a></li>
+                                    <li><a href="#" class="text-light">Forms</a></li>
                                     <li class="active">Basic</li>
                                 </ol>
                             </div>
@@ -152,7 +151,7 @@
             <!-- Animated -->
             <div class="animated fadeIn">
 
-                <main class="py-4">
+                <main class="py-3">
                     @yield('content')
                 </main>
 
@@ -170,13 +169,23 @@
     <!-- /#right-panel -->
 
     <!-- Scripts -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+
+
+
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
 
     <!--  Chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
@@ -197,8 +206,10 @@
     <script src="{{ asset('assets/js/init/fullcalendar-init.js') }}"></script>
 
 
+@yield('script')
 
-    <!--Local Stuff-->
+<script src="{{ asset('assets/js/main.js') }}"></script>
+{{--     <!--Local Stuff-->
     <script>
         jQuery(document).ready(function($) {
             "use strict";
@@ -389,7 +400,7 @@
             });
             // Bar Chart #flotBarChart End
         });
-    </script>
+    </script> --}}
     @include('sweet::alert')
 </body>
 </html>
