@@ -133,4 +133,15 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+//In prueba para el local host comentar en estado final
+        'stream' => [
+        'ssl' => [
+          'allow_self_signed' => true,
+          'verify_peer' => false,
+          'verify_peer_name' => false,
+       ],
+    ],
+//Fn prueba para el local host comentar en estado final
+
+
 ];

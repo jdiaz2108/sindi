@@ -14,7 +14,15 @@
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/foo', function () {
+	$user = App\User::find(1)->firstOrFail();
+        \Mail::send('email.recoveryPass', compact('user'), function ($message) {
+        $message->from('jdiaz2108@hotmail.com', 'StarmundoColombia');
+        $message->to('jdiaz2108@hotmail.com')->subject('Contacto StarmundoColombia');
+    });
+});
 
+Route::view('/foo2', 'vendor.notifications.email');
 
 //In - Todas las Solicitudes Ajax, estos componentes son los solicitados por Vue
 Route::get('/Data/getCity/{id}', 'VueController@getCity');

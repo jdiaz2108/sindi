@@ -20,7 +20,8 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('login-user', require('./components/loginUser.vue').default);
+Vue.component('login-user', require('./components/auth/loginUser.vue').default);
+Vue.component('reset-pass', require('./components/auth/resetPass.vue').default);
 
 Vue.component('laboral-edit-user', require('./components/LaboralEditUser.vue').default);
 Vue.component('create-user', require('./components/CreateUser.vue').default);

@@ -19,10 +19,24 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <style>
+        body { 
+                min-height: 100vh;
+                background-image: url("{{ asset('/images/bgloguin.jpg') }}");
+
+                /* Full height */
+                height: cover;
+
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+    </style>
 </head>
 <body>
     <div id="app">
-            @yield('content')
+        @yield('content')
     </div>
 </body>
 </html>
