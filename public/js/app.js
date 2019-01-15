@@ -58800,7 +58800,7 @@ var render = function() {
   return _c("main", { staticClass: "py-4" }, [
     _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "col-lg-6 col-md-10 col-12" }, [
           _c(
             "div",
             {
@@ -59177,7 +59177,7 @@ var render = function() {
   return _c("main", { staticClass: "py-4" }, [
     _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "col-lg-6 col-md-10 col-12" }, [
           _c(
             "div",
             {

@@ -20,8 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->integer('document')->unique();
+            $table->string('slug')->unique();
             $table->integer('document_types_id');
-            $table->integer('is_admin');
+            $table->integer('level');
             $table->integer('user_type');
             $table->integer('status');
             $table->timestamp('email_verified_at')->nullable();

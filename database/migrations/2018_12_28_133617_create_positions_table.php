@@ -17,6 +17,7 @@ class CreatePositionsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
+            $table->integer('level');
             $table->integer('status');
             $table->integer('learning_profile_id');
             $table->integer('depend_id');
