@@ -58811,7 +58811,7 @@ var render = function() {
               _c("div", { staticClass: "card-body text-center m-5" }, [
                 _c("img", {
                   staticClass: "img-fluid p-3",
-                  attrs: { src: "/images/resources/logo_base.svg" }
+                  attrs: { src: "images/resources/logo_base.svg" }
                 }),
                 _vm._v(" "),
                 _c("h1", { staticClass: "text-primary" }, [

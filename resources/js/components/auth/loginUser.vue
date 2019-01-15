@@ -6,7 +6,7 @@
                     <div class="card shadow" style="border-radius:25px;">
 
                         <div class="card-body text-center m-5">
-                            <img src="/images/resources/logo_base.svg" class="img-fluid p-3"/>
+                            <img src="images/resources/logo_base.svg" class="img-fluid p-3"/>
                             <h1 class="text-primary">Bienvenido</h1>
 
                             <form method="POST" class="align-middle form-group" @submit.prevent>
