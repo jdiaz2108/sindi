@@ -157,7 +157,7 @@
 
                                 <tr>
                                     <td align="center" height="70" style="height:70px;">
-                                        <a href="" style="display: block; border-style: none !important; border: 0 !important;"><img width="100" border="0" style="display: block; width: 200px;" src="https://pmkblog.com/sindi/images/logo_pmk.png" alt="" /></a>
+                                        <a href="" style="display: block; border-style: none !important; border: 0 !important;"><img width="100" border="0" style="display: block; width: 200px;" src="https://sindi.pmk.com.co/images/logo_pmk.png" alt="" /></a>
                                     </td>
                                 </tr>
 
@@ -285,8 +285,8 @@
     <table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="2a2e36">
 
         <tr>
-            <td align="center" style="background-image: url(https://pmkblog.com/sindi/images/bgloginshort.jpg); background-size: cover; background-position: top center; background-repeat: no-repeat;"
-                background="https://pmkblog.com/sindi/images/bgloginshort.jpg">
+            <td align="center" style="background-image: url(https://sindi.pmk.com.co/images/bgloginshort.jpg); background-size: cover; background-position: top center; background-repeat: no-repeat;"
+                background=https://sindi.pmk.com.co/images/bgloginshort.jpg">
 
                 <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
 
@@ -387,7 +387,7 @@
                                             <tr>
                                                 <!-- logo -->
                                                 <td align="left">
-                                                    <a href="" style="display: block; border-style: none !important; border: 0 !important;"><img width="80" border="0" style="display: block; width: 80px;" src="https://pmkblog.com/sindi/images/logo_pmk.png" alt="" /></a>
+                                                    <a href="" style="display: block; border-style: none !important; border: 0 !important;"><img width="80" border="0" style="display: block; width: 80px;" src=https://sindi.pmk.com.co/images/logo_pmk.png" alt="" /></a>
                                                 </td>
                                             </tr>
 
@@ -400,7 +400,7 @@
                                                     class="text_color">
                                                     <div style="color: #333333; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; font-weight: 600; mso-line-height-rule: exactly; line-height: 23px;">
 
-                                                        Escribenos un Correo: <br/> <a href="mailto:" style="color: #888888; font-size: 14px; font-family: 'Hind Siliguri', Calibri, Sans-serif; font-weight: 400;">jdiaz2108@pmkmail.com</a>
+                                                        Escribenos un Correo: <br/> <a href="mailto:" style="color: #888888; font-size: 14px; font-family: 'Hind Siliguri', Calibri, Sans-serif; font-weight: 400;">sindi@pmk.com.co</a>
 
                                                     </div>
                                                 </td>
@@ -433,15 +433,15 @@
                                                     <table border="0" align="right" cellpadding="0" cellspacing="0">
                                                         <tr>
                                                             <td>
-                                                                <a href="https://www.pmkblog.com" style="display: block; border-style: none !important; border: 0 !important;"><img width="24" border="0" style="display: block;" src="http://i.imgur.com/Qc3zTxn.png" alt=""></a>
+                                                                <a href="https://sindi.pmk.com.co/" style="display: block; border-style: none !important; border: 0 !important;"><img width="24" border="0" style="display: block;" src="http://i.imgur.com/Qc3zTxn.png" alt=""></a>
                                                             </td>
                                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                                             <td>
-                                                                <a href="https://www.pmkblog.com" style="display: block; border-style: none !important; border: 0 !important;"><img width="24" border="0" style="display: block;" src="http://i.imgur.com/RBRORq1.png" alt=""></a>
+                                                                <a href="https://sindi.pmk.com.co/" style="display: block; border-style: none !important; border: 0 !important;"><img width="24" border="0" style="display: block;" src="http://i.imgur.com/RBRORq1.png" alt=""></a>
                                                             </td>
                                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                                             <td>
-                                                                <a href="https://www.pmkblog.com" style="display: block; border-style: none !important; border: 0 !important;"><img width="24" border="0" style="display: block;" src="http://i.imgur.com/Wji3af6.png" alt=""></a>
+                                                                <a href="https://sindi.pmk.com.co/" style="display: block; border-style: none !important; border: 0 !important;"><img width="24" border="0" style="display: block;" src="http://i.imgur.com/Wji3af6.png" alt=""></a>
                                                             </td>
                                                         </tr>
                                                     </table>

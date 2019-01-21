@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>PMK Sindi</title>
     <!-- Scripts -->
     
 
@@ -108,19 +108,21 @@
 </head>
 
 <body>
+
     <div id="app">
+         @if(Auth::user()->status == 6)
     <!-- In Menu Izquierda -->
     @include('layouts.leftpanel')
     <!-- Fn Menu Izquierda -->
 
-
+@endif 
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
 
         <!-- In Barra Superior -->
         @include('layouts.topbar')
         <!-- Fn Barra Superior -->
-
+        @if(Auth::user()->status == 6)
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner shadow rounded blue-gradient">
                 <div class="row m-0">
@@ -145,14 +147,18 @@
                 </div>
             </div>
         </div>
-
+        @endif
         <!-- Content -->
         <div class="content">
             <!-- Animated -->
             <div class="animated fadeIn">
 
                 <main class="py-3">
-                    @yield('content')
+                    @if(Auth::user()->status == 6)
+                        @yield('content')
+                    @else
+                        @include('auth.passwords.update')
+                    @endif
                 </main>
 
             </div>
@@ -160,11 +166,11 @@
         </div>
         <!-- /.content -->
         <div class="clearfix"></div>
-
         <!-- Ini Footer -->
         @include('layouts.footer')
         <!-- Fn Footer -->
-    </div> 
+    </div>
+
 </div>
     <!-- /#right-panel -->
 
@@ -209,7 +215,7 @@
 @yield('script')
 
 <script src="{{ asset('assets/js/main.js') }}"></script>
-{{--     <!--Local Stuff-->
+{{--    
     <script>
         jQuery(document).ready(function($) {
             "use strict";
@@ -401,6 +407,6 @@
             // Bar Chart #flotBarChart End
         });
     </script> --}}
-    @include('sweet::alert')
+{{--     @include('sweet::alert') --}}
 </body>
 </html>

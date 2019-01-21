@@ -63,10 +63,13 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('/Em', 'EmployeeControler');
 	//Fn - Ruta CRUD relacionada con Empleados
 
+Route::resource('/pys', 'PysController');
+
 
 Route::group(['middleware' => ['admin']], function () {
 
 	//In - Ruta CRUD relacionada con Usuarios
+	Route::put('/U/{id}/updatePassword', 'UserController@updatePassword');
 	Route::resource('/U', 'UserController');
 	//Fn - Ruta CRUD relacionada con Usuarios
 });

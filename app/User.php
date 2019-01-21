@@ -49,4 +49,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Children');
     }
+
+    public function registerpys()
+    {
+        return $this->hasMany('App\Models\Registerpys');
+    }
+
 }

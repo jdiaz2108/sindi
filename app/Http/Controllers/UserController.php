@@ -124,4 +124,21 @@ class UserController extends Controller
     {
         //
     }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $user = User::whereSlug($id)->firstOrFail();
+
+        if ($test = Hash::check($request->passwordOld, $user->password)) {
+            $user->update(['password' => Hash::make($request->password), 'status' => 6 ]);
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('message', 'Tu contraseña anterior no conincide');
+        }
+        return dd($test);
+    }
 }
