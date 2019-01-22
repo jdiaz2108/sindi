@@ -82,35 +82,13 @@
         #cellPaiChart{
             height: 160px;
         }
-        .purple-gradient {
-            background-image: linear-gradient(40deg, rgb(255, 110, 196), rgb(120, 115, 245)) !important;
-        }
-        .aqua-gradient {
-            background-image: linear-gradient(40deg, rgb(32, 150, 255), rgb(5, 255, 163)) !important;
-        }
-        .blue-gradient {
-            background-image: linear-gradient(40deg, rgb(69, 202, 252), rgb(48, 63, 159)) !important;
-        }
-        .peach-gradient {
-            background-image: linear-gradient(40deg, rgb(255, 216, 111), rgb(252, 98, 98)) !important;
-        }
-        .timber-gradient {
-            background-image: linear-gradient(40deg, rgb(252, 0, 255), rgb(0, 219, 222)) !important;
-        }
-        .atlas-gradient {
-            background-image: linear-gradient(40deg, rgb(254, 172, 94), rgb(199, 121, 208), rgb(75, 192, 200)) !important;
-        }
-        .pmk-gradient {
-            background-image: linear-gradient(40deg, rgb(0, 106, 179), rgb(236, 177, 11)) !important;
-        }
-
     </style>
 </head>
 
 <body>
 
     <div id="app">
-         @if(Auth::user()->status == 6)
+         @if(Auth::user()->status > 1)
     <!-- In Menu Izquierda -->
     @include('layouts.leftpanel')
     <!-- Fn Menu Izquierda -->
@@ -122,7 +100,7 @@
         <!-- In Barra Superior -->
         @include('layouts.topbar')
         <!-- Fn Barra Superior -->
-        @if(Auth::user()->status == 6)
+        @if(Auth::user()->status > 1)
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner shadow rounded blue-gradient">
                 <div class="row m-0">
@@ -154,7 +132,7 @@
             <div class="animated fadeIn">
 
                 <main class="py-3">
-                    @if(Auth::user()->status == 6)
+                    @if(Auth::user()->status > 1)
                         @yield('content')
                     @else
                         @include('auth.passwords.update')

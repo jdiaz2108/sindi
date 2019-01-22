@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-12 col-lg-3">
+    <div class="col-md-12 col-lg-4 col-xl-3">
         <form method="POST" action="/Em/{{$user->id}}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
@@ -41,7 +41,7 @@
         <perfil-edit-user :level="{{Auth::user()->level}}" :user="{{$user}}"></perfil-edit-user>
     </div>
 
-    <div class="col-md-12 col-lg-9">
+    <div class="col-md-12 col-lg-8 col-xl-9">
         <personal-edit-user :level="{{Auth::user()->level}}" :personal="{{$user->employee}}" ></personal-edit-user>
         <laboral-edit-user :level="{{Auth::user()->level}}" :personal="{{$user->employee}}" ></laboral-edit-user>
     </div>

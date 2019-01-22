@@ -11,7 +11,7 @@
                             <strong class="card-title">Pas y Salvo</strong>
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table shadow rounded">
                                 <thead class="thead-dark text-center">
                                     <tr>
                                       <th scope="col"><h5 class="display-5">AREA</h5></th>
@@ -26,9 +26,9 @@
                               <tbody>
                                 @foreach($registerpys as $pys)
 
-@php
-$rowspan = $registerpys->where('concept.area_id', $pys->concept->area->id)->count('area.id')
-@endphp
+                                    @php
+                                    $rowspan = $registerpys->where('concept.area_id', $pys->concept->area->id)->count('area.id')
+                                    @endphp
 
                                 <tr>
                                     @if($aux != $rowspan)
