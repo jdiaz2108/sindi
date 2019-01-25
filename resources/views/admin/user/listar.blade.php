@@ -29,10 +29,10 @@
                                         @foreach($employees as $employee)
                                         <tr>
                                             <td class="serial">{{$employee->id}}</td>
-                                            <td class="serial">{{$employee->user->document}}</td>
+                                            <td class="serial">{{$employee->user->document ?? ''}}</td>
                                             <td class="avatar">
                                                 <div class="round-img">
-                                                    <a href="/U/{{$employee->user->slug}} ">
+                                                    <a href="/U/{{$employee->user->slug ?? ''}} ">
                                                         <img  
                                                         @if($employee->user_picture) 
                                                             src="{{ asset('storage/EmployeeImages/'.$employee->user_picture_url) }}" class="rounded-circle"
@@ -40,14 +40,14 @@
                                                     </a>
                                                 </div>
                                             </td>
-                                            <td>  <span class="name">{{$employee->user->name}}</span> </td>
-                                            <td>  <span class="name">{{$employee->user->last_name}}</span> </td>
-                                            <td>  <span class="name">{{$employee->user->email}}</span> </td>
+                                            <td>  <span class="name">{{$employee->user->name ?? ''}}</span> </td>
+                                            <td>  <span class="name">{{$employee->user->last_name ?? ''}}</span> </td>
+                                            <td>  <span class="name">{{$employee->user->email ?? ''}}</span> </td>
                                             <td>  <span class="name">{{$employee->position->name ?? ''}}</span> </td>
                                             <td>  <span class="name">{{$employee->city->name ?? ''}}</span> </td>
                                             {{-- <td><span class="count">250</span></td> --}}
                                             <td>
-                                                <a role="button" class="btn btn-success btn-sm" href="/U/{{$employee->user->slug}}"><i class="fa fa-user"></i>&nbsp; Ver Perfil</a>
+                                                <a role="button" class="btn btn-success btn-sm" href="/U/{{$employee->user->slug  ?? ''}}"><i class="fa fa-user"></i>&nbsp; Ver Perfil</a>
                                             </td>
                                         </tr>
                                         @endforeach

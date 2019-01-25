@@ -45,11 +45,11 @@
                                             <span class="badge badge-secondary">N/A</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">$ 10.000</td>
-                                    <td class="text-center">John Diaz</td>
-                                    <td class="text-center">$ 10.000</td>
+                                    <td class="text-center">{{ $pys->discount ?? '' }}</td>
+                                    <td class="text-center">{{ $pys->sign ?? '' }}</td>
+                                    <td class="text-center">{{ $pys->observations ?? '' }}</td>
                                         @if($aux != $rowspan)
-                                        <td rowspan="{{$rowspan}}" class="text-center align-middle" scope="row"><a class="btn btn-primary" href="#" role="button">Link</a></td>
+                                        <td rowspan="{{$rowspan}}" class="text-center align-middle" scope="row"><a class="btn btn-primary" href="#" role="button">Estatus</a></td>
                                         @php $aux = $rowspan @endphp
                                     @endif 
                                 </tr>

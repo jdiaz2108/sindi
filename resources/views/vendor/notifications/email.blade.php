@@ -387,7 +387,8 @@
                                             <tr>
                                                 <!-- logo -->
                                                 <td align="left">
-                                                    <a href="" style="display: block; border-style: none !important; border: 0 !important;"><img width="80" border="0" style="display: block; width: 80px;" src=https://sindi.pmk.com.co/images/logo_pmk.png" alt="" /></a>
+                                                    <a href="https://sindi.pmk.com.co" style="display: block; border-style: none !important; border: 0 !important;"><img width="80" border="0" style="display: block; width: 80px;" 
+                                                        src="https://sindi.pmk.com.co/images/logo_pmk.png" alt="" /></a>
                                                 </td>
                                             </tr>
 

@@ -8,7 +8,7 @@
             @csrf
             <div class="card" style="margin-top: 25px">
                 <img style="margin-top: -25px; max-width: calc(100% - 32px); min-height: 150px" 
-                @if($user->employee->user_picture) 
+                @if($user->employee->user_picture ?? '' != '') 
                     src="{{ asset('storage/EmployeeImages/'.$user->employee->user_picture_url) }}" class="card-img-top mx-auto shadow rounded"
                 @else src="/images/avatar.png" class="card-img-top mx-auto shadow rounded blue-gradient p-5" @endif  
                 alt="Card image cap">
@@ -48,7 +48,4 @@
 
 </div>
 
-<p>
-    <a href="/" class="mt-2 btn btn-info">Regresar al listado de usuarios</a>
-</p>
 @endsection

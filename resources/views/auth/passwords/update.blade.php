@@ -8,7 +8,7 @@
                             <h3 class="text-primary pb-3">Bienvenido a SINDI</h3>
 
                             <form method="POST" class="align-middle form-group" action="/U/{{$user->slug}}/updatePassword">
-            @method('PUT')
+                                @method('PUT')
                                 @csrf
                                 <div class="row">
 <p class="text-secondary mx-auto text-center col-10 pb-3">Antes de ingresar, te invitamos a asignar una nueva contraseña para garantizar mayor seguridad y una experiencia personalizada.</p>
@@ -63,7 +63,15 @@
                                             </div>
                                 </div>
                             </form>
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 
                         </div>

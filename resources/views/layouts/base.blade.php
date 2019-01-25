@@ -88,12 +88,12 @@
 <body>
 
     <div id="app">
-         @if(Auth::user()->status > 1)
-    <!-- In Menu Izquierda -->
-    @include('layouts.leftpanel')
-    <!-- Fn Menu Izquierda -->
+            @if(Auth::user()->status > 1)
+                <!-- In Menu Izquierda -->
+                @include('layouts.leftpanel')
+                <!-- Fn Menu Izquierda -->
 
-@endif 
+            @endif 
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
 

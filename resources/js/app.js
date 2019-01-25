@@ -23,7 +23,6 @@ window.Vue = require('vue');
 Vue.component('login-user', require('./components/auth/loginUser.vue').default);
 Vue.component('reset-pass', require('./components/auth/resetPass.vue').default);
 
-Vue.component('list-pys', require('./components/listPys.vue').default);
 
 Vue.component('laboral-edit-user', require('./components/LaboralEditUser.vue').default);
 Vue.component('create-user', require('./components/CreateUser.vue').default);
