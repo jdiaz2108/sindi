@@ -1,5 +1,5 @@
 @extends('layouts.base')
-
+@section('title', 'Lista de todos los Usuarios')
 @section('content')
                 <div class="row">
                     <div class="col-lg-12">
@@ -35,7 +35,7 @@
                                                     <a href="/U/{{$employee->user->slug ?? ''}} ">
                                                         <img  
                                                         @if($employee->user_picture) 
-                                                            src="{{ asset('storage/EmployeeImages/'.$employee->user_picture_url) }}" class="rounded-circle"
+                                                            src="{{ asset('storage/EmployeeImages/tumb.'.$employee->user_picture_url) }}" class="rounded-circle"
                                                         @else src="/images/avatar.png" class="rounded-circle blue-gradient p-1" @endif >
                                                     </a>
                                                 </div>
