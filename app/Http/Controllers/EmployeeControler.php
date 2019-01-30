@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Faker\Generator;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class EmployeeControler extends Controller
 {
@@ -75,12 +76,21 @@ class EmployeeControler extends Controller
         Employee::findOrFail($id)->update($request->all());
         $employee = Employee::findOrFail($id);
         if ($request->has('file')) {
+
+   
+
+    // return $img->response('jpg');
+
+
+
+
             $file = $request->file('file');
             $path = Storage::putFile('public/EmployeeImages', $file);
             $employee->user_picture = $file->getClientOriginalName();
             $employee->user_picture_url = basename($path);
             $employee->save();
-            
+    
+            $img = Image::make('storage/EmployeeImages/'.$employee->user_picture_url)->resize(100, 100)->save('storage/EmployeeImages/tumb.'.$employee->user_picture_url);
         }
         if($request->ajax()){
         return response('ok', Response::HTTP_OK);

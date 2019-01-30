@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>PMK Sindi</title>
+    <title>Sindi PMK</title>
     <!-- Scripts -->
     
 
@@ -17,16 +17,16 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
-      <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
 
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 
-    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="apple-touch-icon" href="{{ asset('images/icon-64px-retina.png') }}">
+    <link rel="shortcut icon" href="{{ asset('images/icon-64px-retina.png') }}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
 
@@ -107,7 +107,7 @@
                     <div class="col-sm-4">
                         <div class="page-header float-left bg-transparent">
                             <div class="page-title text-white">
-                                <h1>Dashboard</h1>
+                                <h1>@yield('title')</h1>
                             </div>
                         </div>
                     </div>
@@ -116,8 +116,7 @@
                             <div class="page-title">
                                 <ol class="breadcrumb text-right bg-transparent text-white">
                                     <li><a href="/" class="text-light">Inicio</a></li>
-                                    <li><a href="#" class="text-light">Forms</a></li>
-                                    <li class="active">Basic</li>
+                                    <li class="active">@yield('title')</li>
                                 </ol>
                             </div>
                         </div>

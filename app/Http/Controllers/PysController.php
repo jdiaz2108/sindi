@@ -24,6 +24,8 @@ class PysController extends Controller
         if ($user->status == 5) {
             $registerpys = Registerpys::whereUser_id($user->id)->with('concept', 'concept.area')->get();
             return view('pys.table', compact('user', 'registerpys'));
+        } elseif($user->status == 6) {
+            return view('pys.desvinculacion') ;
         }
     }
 
@@ -42,32 +44,40 @@ class PysController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
+        $confirm = User::whereSlug($id)->firstOrFail();
         $user = Auth::user();
+        // $user = User::find(161);
+if ($confirm->id == $user->id) {
+    # code...
 
-        if ($user->registerpys->count() == 0){
+            if ($user->registerpys->count() == 0){
 
-            $Conceptpys = Conceptpys::all();
-                foreach ($Conceptpys as $key => $value) {
-                    $var = Registerpys::create([
-                        'user_id' => $user->id,
-                        'conceptpys_id' => $value->id,
-                        'status' => NULL,
-                        'discount' => NULL,
-                        'sign' => NULL,
-                        'signer' => NULL,
-                        'observations' => NULL,
-                        'slug' => str_random(10),
-                    ]);
-                }
+                $Conceptpys = Conceptpys::all();
+                    foreach ($Conceptpys as $key => $value) {
+                        $var = Registerpys::create([
+                            'user_id' => $user->id,
+                            'conceptpys_id' => $value->id,
+                            'status' => NULL,
+                            'discount' => NULL,
+                            'sign' => NULL,
+                            'signer' => NULL,
+                            'observations' => NULL,
+                            'slug' => str_random(10),
+                        ]);
+                    }
 
-            $user->update(['status' => 5 ]);
+                $user->update(['status' => 5 ]);
 
-            return redirect('/')->with('message', 'Ha empezado el proceso de Paz y Salvo');
+                return redirect('/')->with('message', 'Ha empezado el proceso de Paz y Salvo');
 
-        }
-            return redirect('/')->with('message', 'Error sistema');
+            }
+                return redirect('/')->with('message', 'Error sistema');
+
+} else {
+    return abort(404);
+}
 
     }
 
@@ -106,11 +116,6 @@ class PysController extends Controller
         $responsable = Auth::user();
         $registerpys = Registerpys::whereSlug($id)->with('concept', 'concept.area', 'user')->firstOrFail();
         return view('pys.verificar', compact('registerpys', 'responsable'));
-        return $registerpys;
-
-        $user = User::whereSlug($id)->firstOrFail();
-        $registerpys = Registerpys::whereUser_id($user->id)->with('concept', 'concept.area')->get();
-        return view('pys.table', compact('user', 'registerpys'));
     }
 
     /**
@@ -122,7 +127,13 @@ class PysController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
+        Registerpys::find($id)->update($request->all());
+        $registerpys = Registerpys::findorFail($id);
+        $signer =  Auth::user();
+        $registerpys->signer = $signer->id;
+        $registerpys->sign = $signer->name.' '.$signer->last_name;
+        $registerpys->save();
+        return redirect('pys');
     }
 
     /**

@@ -19,12 +19,11 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-handshake-o"></i>Paz y Salvo</a>
                         <ul class="sub-menu children dropdown-menu">
-                            @if(Auth::user()->status == 5)
-                                <li><i class="fa fa-puzzle-piece"></i><a href="/pysEstado">Estado Paz y Salvo</a></li>
-                            @endif
+                                <li><i class="fa fa-handshake-o"></i><a href="/pysEstado">Estado Paz y Salvo</a></li>
                             @if(Auth::user()->level == 992)
-                            <li><i class="fa fa-puzzle-piece"></i><a href="/pys/{{Auth::user()->slug}}">Buttons</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
+                            <li><i class="fa fa-handshake-o"></i><a href="/pys">Procesos Activos</a></li>
+                            <li><i class="fa fa-handshake-o"></i><a href="/pys/{{Auth::user()->slug}}">Buttons</a></li>
+                            <li><i class="fa fa-handshake-o"></i><a href="ui-badges.html">Badges</a></li>
                             @endif
                         </ul>
                     </li>

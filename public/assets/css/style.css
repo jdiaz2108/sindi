@@ -2536,4 +2536,13 @@ footer.site-footer {
         .blooker20-gradient {
             background-image: linear-gradient(40deg, rgb(230, 92, 0), rgb(249, 212, 35)) !important;
         }
+        .instagram-gradient {
+            background-image: linear-gradient(40deg, rgb(131, 58, 180), rgb(253, 29, 29), rgb(252, 176, 69)) !important;
+        }
+        .wiretap-gradient {
+            background-image: linear-gradient(40deg, rgb(138, 35, 135), rgb(233, 64, 87), rgb(252, 176, 69)) !important;
+        }
+        .sincityred-gradient {
+            background-image: linear-gradient(40deg, rgb(237, 33, 58), rgb(147, 41, 30)) !important;
+        }
 

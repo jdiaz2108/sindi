@@ -85,8 +85,8 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="user-avatar rounded-circle img-fluid" 
-                           {{--  @if($user->employee->user_picture) src="{{ asset('storage/EmployeeImages/'.$user->employee->user_picture_url) }}" style="height: 40px" 
-                                    @else --}} src="{{ asset('images/user_avatar.png') }}" {{--  @endif  --}}
+                       @if($user->employee->user_picture ?? '') src="{{ asset('storage/EmployeeImages/tumb.'.$user->employee->user_picture_url) }}" style="height: 40px" 
+                                    @else src="{{ asset('images/user_avatar.png') }}"  @endif 
                                      alt="User Avatar">
                         </a>
 

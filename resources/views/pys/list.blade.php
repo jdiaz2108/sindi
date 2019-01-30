@@ -1,5 +1,5 @@
 @extends('layouts.base')
-
+@section('title', 'Procesos activos de Paz y Salvo')
 @section('content')
 {{-- <list-pys></list-pys> --}}
 @php $aux = 0 @endphp
@@ -12,7 +12,7 @@
                         <div class="card-header">
                             <strong class="card-title">
                                 <div class="text-light blooker20-gradient rounded mx-auto shadow" style="margin-top: -25px; max-width: calc(100% - 20px);">
-                                    <h2 class="p-3">Proceso de Paz  y Salvo: {{$u->name}} {{$u->last_name}} <a class="btn btn-dark float-right my-auto" href="#" role="button">Ver Perfil</a></h2>
+                                    <h2 class="p-3">Proceso de Paz  y Salvo: {{$u->name}} {{$u->last_name}} <a target="_blank" class="btn btn-dark float-right my-auto" href="/U/{{$u->slug}}" role="button">Ver Perfil</a></h2>
                                 </div>
                             </strong>
                         </div>
@@ -67,7 +67,13 @@
                                                 <td class="text-center">{{ $pys->discount}}</td>
                                                 <td class="text-center">{{ $pys->sign}}</td>
                                                 <td class="text-center">{{ $pys->observations}}</td>
-                                                <td class="text-center"><a class="btn btn-primary border" href="/pys/{{$pys->slug}}/edit" role="button">Verificar <i class="fa fa-check-square" aria-hidden="true"></i></a></td>
+                                                <td class="text-center">
+                                                    @if($pys->signer)
+                                                        <a class="btn btn-secondary border" href="/pys/{{$pys->slug}}/edit" role="button">Verificado <i class="fa fa-check-square" aria-hidden="true"></i></a>
+                                                    @else
+                                                        <a class="btn btn-primary border" href="/pys/{{$pys->slug}}/edit" role="button">Verificar <i class="fa fa-check-square" aria-hidden="true"></i></a>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endif
                                      @endforeach

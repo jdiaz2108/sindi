@@ -68,15 +68,20 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::put('/U/{id}/updatePassword', 'UserController@updatePassword');
 	//Fn Actualización de contraseña esta habilitada para todos los Usuarios
 	Route::get('/pysEstado', 'PysController@estado');
+	Route::get('/pys/{id}/create', 'PysController@create');
 
-Route::group(['middleware' => ['admin']], function () {
+	Route::group(['middleware' => ['admin']], function () {
 
-	//In - Ruta CRUD relacionada con Usuarios
-	Route::resource('/U', 'UserController');
-	//Fn - Ruta CRUD relacionada con Usuarios
+		//In - Ruta CRUD relacionada con Usuarios
+		Route::resource('/U', 'UserController');
+		//Fn - Ruta CRUD relacionada con Usuarios
 
-	Route::resource('/pys', 'PysController');
-});
+		Route::resource('/pys', 'PysController');
+	});
+
+	Route::get('/background', function() {
+		return view('bg');
+	});
 
 });
 //Fn - Rutan con el Middleware para la Autenticacion

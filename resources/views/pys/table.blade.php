@@ -1,5 +1,7 @@
 @extends('layouts.base')
 
+@section('title', 'Estado Paz y Salvo')
+
 @section('content')
 {{-- <list-pys></list-pys> --}}
 @php $aux = 0 @endphp
@@ -8,7 +10,7 @@
         <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Pas y Salvo</strong>
+                            <strong class="card-title">Paz y Salvo</strong>
                         </div>
                         <div class="card-body">
                             <table class="table shadow rounded">
@@ -20,7 +22,7 @@
                                       <th scope="col"><h5 class="display-5">VALOR A DESCONTAR</h5></th>
                                       <th scope="col"><h5 class="display-5">FIRMA RESPONSABLE DE VERIFICACION</h5></th>
                                       <th scope="col"><h5 class="display-5">OBSERVACIONES</h5></th>
-                                      <th scope="col"><h5 class="display-5">ACCIONES</h5></th>
+                                      <th scope="col"><h5 class="display-5">ESTADO</h5></th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -33,7 +35,7 @@
                                 <tr>
                                     @if($aux != $rowspan)
                                         <td rowspan="{{$rowspan}}" class="text-center align-middle" scope="row">{{$pys->concept->area->name}}</td>
-                                
+                                        @php $aux = $rowspan @endphp
                                     @endif 
                                     
                                     <td>{{$pys->concept->concept}}</td>
@@ -47,11 +49,14 @@
                                     </td>
                                     <td class="text-center">{{ $pys->discount ?? '' }}</td>
                                     <td class="text-center">{{ $pys->sign ?? '' }}</td>
-                                    <td class="text-center">{{ $pys->observations ?? '' }}</td>
-                                        @if($aux != $rowspan)
-                                        <td rowspan="{{$rowspan}}" class="text-center align-middle" scope="row"><a class="btn btn-primary" href="#" role="button">Estatus</a></td>
-                                        @php $aux = $rowspan @endphp
-                                    @endif 
+                                    <td class="text-center">{{ $pys->observations ?? '' }}</td> 
+                                    <td class="text-center align-middle" scope="row">
+                                        @if($pys->sign)
+                                        <a class="btn btn-success disabled" href="#" role="button" disabled>Revisado</a>
+                                        @else
+                                        <a class="btn btn-secondary disabled" href="#" role="button" disabled>Sin Revisar</a>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
