@@ -18,7 +18,12 @@
 					<div class="card-body px-lg-5 pt-0 mx-auto">
 						<form class="border-light p-5 form-group" action="/pys/{{Auth::user()->slug}}/create">
 							<label for="textInput">Descripción:</label>
-							<p class="py-3">este es un texto de prueba</p>
+							<p class="py-3">En esta sección podrás dar inicio a tu proceso de desvinculación con PMK. 
+							En este proceso se deben generar una serie de paz y salvos para garantizar que no hay pendientes y que tu desvinculación se realice correctamente, es decir, sin perjuicios para ti o para la empresa.  
+							<br>
+							<br>
+							Haz clic en continuar para dar inicio al proceso. 
+							</p>
 							
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Continuar</button>
@@ -28,10 +33,10 @@
 							<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+							      <div class="modal-header sincityred-gradient text-white">
+							        <h5 class="modal-title" id="exampleModalLabel">Confirmación de Desvinculación</h5>
 							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
+							          <span aria-hidden="true" class="text-white">&times;</span>
 							        </button>
 							      </div>
 							      <div class="modal-body">
@@ -44,6 +49,7 @@
 							    </div>
 							  </div>
 							</div>
+
 						</form>
 					</div>
 				</div>
