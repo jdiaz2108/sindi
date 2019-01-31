@@ -7,11 +7,10 @@
                             <div class="card-header">
                                 <strong class="card-title">Listar Usuarios</strong>
                             </div>
-                            <div class="table-stats order-table ov-h card-body ">
+                            <div class="table-stats order-table ov-h">
                                 <table id="myTable" class="table ">
                                     <thead>
                                         <tr>
-                                            <th class="serial">id</th>
                                             <th class="serial">ID</th>
                                             <th class="avatar">Avatar</th>
                                             
@@ -28,7 +27,6 @@
                                     <tbody>
                                         @foreach($employees as $employee)
                                         <tr>
-                                            <td class="serial">{{$employee->id}}</td>
                                             <td class="serial">{{$employee->user->document ?? ''}}</td>
                                             <td class="avatar">
                                                 <div class="round-img">
@@ -61,19 +59,13 @@
                             </div> <!-- /.table-stats -->
                         </div>
                     </div>
-
         </div>
 @endsection
 @section('script')
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable({
-            "order": [[0 , "asc"]],
-            "columnDefs": [{
-                "targets": [ 0 ],
-                "visible": false,
-                "searchable": false
-            }]
+            "order": [[3 , "asc"]],
         });
     } );
 </script>
