@@ -136,7 +136,6 @@
                   .then(function (response) {
                     console.log(response);
                     window.location.href = '/';
-                    
                   })
                     .catch(error => {
                         this.errors = error.response.data;

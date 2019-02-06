@@ -50,7 +50,7 @@ Route::resource('/Child', 'ChildrenController');
 //In - Solicitud Ajax Inicio de Sesion para obtener credenciales de usuario
 Route::get('/getCorreo/{id}', 'VueController@getCorreo');
 //Fn - Solicitud Ajax Inicio de Sesion para obtener credenciales de usuario
-
+Route::get('/prueba', 'UserController@updateStatus');
 
 
 //In - Rutan con el Middleware para la Autenticacion
@@ -66,16 +66,17 @@ Route::group(['middleware' => ['auth']], function () {
 
 	//In Actualización de contraseña esta habilitada para todos los Usuarios
 	Route::put('/U/{id}/updatePassword', 'UserController@updatePassword');
+
+
 	//Fn Actualización de contraseña esta habilitada para todos los Usuarios
 	Route::get('/pysEstado', 'PysController@estado');
-	Route::get('/pys/{id}/create', 'PysController@create');
 
 	Route::group(['middleware' => ['admin']], function () {
 
 		//In - Ruta CRUD relacionada con Usuarios
 		Route::resource('/U', 'UserController');
 		//Fn - Ruta CRUD relacionada con Usuarios
-
+		Route::get('/pys/{id}/create', 'PysController@create');
 		Route::resource('/pys', 'PysController');
 	});
 

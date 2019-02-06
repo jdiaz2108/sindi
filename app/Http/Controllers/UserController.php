@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Auth;
 use App\User;
 use App\Employee;
 use Illuminate\Support\Facades\Hash;
@@ -140,5 +141,20 @@ class UserController extends Controller
             return redirect()->back()->with('message', 'Tu contraseña anterior no conincide');
         }
         return dd($test);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $user = User::whereSlug(Auth::user()->slug)->firstOrFail();
+        if ($user->status == 1) {
+            $user->update(['status' => 6]);
+        }
+        return redirect('/');
+        // if($request->ajax()){
+        //     $user->update('status' => 6);
+        //     return redirect('/')->with('message', 'Tu contraseña se ha cambiado');
+        // } else {
+        //     return redirect()->back();
+        // }
     }
 }

@@ -41,10 +41,10 @@ class VueController extends Controller
     {
 
         if($request->ajax()){
-            $user = User::select('name', 'email')->whereDocument($id)->first();
+            $user = User::select('name', 'email', 'slug')->whereDocument($id)->first();
             if ($user) { 
                 $data = $user;
-                return response()->json([ 'name' => $data->name, 'email' => $data->email ], 200);
+                return response()->json([ 'name' => $data->name, 'email' => $data->email , 'slug' => $data->slug], 200);
             } else { 
                 return response()->json([ 'error' => 'Usuario no Encontrado' ], 404);
              }

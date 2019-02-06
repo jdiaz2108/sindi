@@ -20,10 +20,13 @@ class PysController extends Controller
     public function estado()
     {
         $id = Auth::user()->id;
-        $user = User::find($id);
+        $user = User::with('employee.position.depend.employee.user')->find($id);
+        $jefedirecto = $user->employee->position->depend->employee->user;
         if ($user->status == 5) {
             $registerpys = Registerpys::whereUser_id($user->id)->with('concept', 'concept.area')->get();
-            return view('pys.table', compact('user', 'registerpys'));
+            $registerpys2 = Registerpys::whereUser_id($user->id)->with('concept', 'concept.area')->get();
+            $registerpys2 = $registerpys2->groupBy('concept.area_id');
+            return view('pys.table', compact('user', 'registerpys', 'registerpys2', 'jefedirecto'));
         } elseif($user->status == 6) {
             return view('pys.desvinculacion') ;
         }
@@ -46,11 +49,9 @@ class PysController extends Controller
      */
     public function create($id)
     {
-        $confirm = User::whereSlug($id)->firstOrFail();
-        $user = Auth::user();
+        $user = User::whereSlug($id)->firstOrFail();
+
         // $user = User::find(161);
-if ($confirm->id == $user->id) {
-    # code...
 
             if ($user->registerpys->count() == 0){
 
@@ -70,14 +71,10 @@ if ($confirm->id == $user->id) {
 
                 $user->update(['status' => 5 ]);
 
-                return redirect('/')->with('message', 'Ha empezado el proceso de Paz y Salvo');
+                return redirect('/pys')->with('message', 'Ha empezado el proceso de Paz y Salvo');
 
             }
-                return redirect('/')->with('message', 'Error sistema');
-
-} else {
-    return abort(404);
-}
+                return redirect('/pys')->with('message', 'Error sistema');
 
     }
 

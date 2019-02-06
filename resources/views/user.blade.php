@@ -39,6 +39,77 @@
         </form>
 
         <perfil-edit-user :level="{{Auth::user()->level}}" :user="{{$user}}"></perfil-edit-user>
+@if(Auth::user()->level > 200)
+    <div class="card">
+        <div class="card-header">
+            <label class="label label-default align-baseline font-weight-bold">Acciones Admin</label>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card-body">
+                    <form class="py-1 form-group" action="/pys/{{$user->slug}}/create">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">Desvincular usuario</button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header sincityred-gradient text-white">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmación de Desvinculación</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true" class="text-white">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    En esta sección podrás dar inicio al proceso de desvinculación de uno de nuestros colaboradores. 
+                                    Al hacer clic en continuar, darás inicio y serás el responsable del proceso de desvinculación del usuario. 
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger">Continuar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                        </form>
+
+                    <div class="progress-box progress-1">
+                        <h4 class="por-title">Visits</h4>
+                        <div class="por-txt">96,930 Users (40%)</div>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="progress-box progress-2">
+                        <h4 class="por-title">Bounce Rate</h4>
+                        <div class="por-txt">3,220 Users (24%)</div>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 24%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="progress-box progress-2">
+                        <h4 class="por-title">Unique Visitors</h4>
+                        <div class="por-txt">29,658 Users (60%)</div>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="progress-box progress-2">
+                        <h4 class="por-title">Targeted  Visitors</h4>
+                        <div class="por-txt">99,658 Users (90%)</div>
+                        <div class="progress mb-2" style="height: 5px;">
+                            <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div> <!-- /.card-body -->
+            </div>
+        </div> <!-- /.row -->
+        <div class="card-body"></div>
+    </div>
+@endif
+
     </div>
 
     <div class="col-md-12 col-lg-8 col-xl-9">
