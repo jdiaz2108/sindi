@@ -19,21 +19,21 @@
                 {!! Form::model($registerpys, ['route' => ['pys.update', $registerpys], 'method' => 'PUT', 'files' => 'true' , 'class' => 'form-horizontal form-label-left']) !!}    
 
                     <div class="row form-group">
-                        <div class="col col-md-3">{!! Form::label('nombre', 'Nombres Usuario:' , ['class' => 'form-control-label']) !!}</div>
+                        <div class="col col-md-3">{!! Form::label('last_name', 'Nombres Usuario:' , ['class' => 'form-control-label']) !!}</div>
                         <div class="col-12 col-md-9">
                             {{$registerpys->user->name}} {{$registerpys->user->last_name}}
                         </div>
                     </div>
 
                     <div class="row form-group">
-                        <div class="col col-md-3">{!! Form::label('nombre', 'Identificación Usuario:' , ['class' => 'form-control-label']) !!}</div>
+                        <div class="col col-md-3">{!! Form::label('document', 'Identificación Usuario:' , ['class' => 'form-control-label']) !!}</div>
                         <div class="col-12 col-md-9">
                             {{$registerpys->user->document}}
                         </div>
                     </div>
 
                     <div class="row form-group">
-                        <div class="col col-md-3">{!! Form::label('nombre', 'Correo Usuario:' , ['class' => 'form-control-label']) !!}</div>
+                        <div class="col col-md-3">{!! Form::label('email', 'Correo Usuario:' , ['class' => 'form-control-label']) !!}</div>
                         <div class="col-12 col-md-9">
                             {{$registerpys->user->email}}
                         </div>
@@ -42,14 +42,14 @@
                     <hr class="w-75 mx-auto py-3">
 
                     <div class="row form-group">
-                        <div class="col col-md-3">{!! Form::label('nombre', 'Area Encargada:' , ['class' => 'form-control-label']) !!}</div>
+                        <div class="col col-md-3">{!! Form::label('name', 'Area Encargada:' , ['class' => 'form-control-label']) !!}</div>
                         <div class="col-12 col-md-9">
                             {{$registerpys->concept->area->name}}
                         </div>
                     </div>
 
                     <div class="row form-group">
-                        <div class="col col-md-3">{!! Form::label('nombre', 'Concepto:' , ['class' => 'form-control-label']) !!}</div>
+                        <div class="col col-md-3">{!! Form::label('concept', 'Concepto:' , ['class' => 'form-control-label']) !!}</div>
                         <div class="col-12 col-md-9">
                             {{$registerpys->concept->concept}}
                         </div>
@@ -64,14 +64,15 @@
                     </div>
 
                     <div class="row form-group">
-                        <div class="col col-md-3">{!! Form::label('nombre', 'Valor a descontar:' , ['class' => 'form-control-label']) !!}</div>
+                        <div class="col col-md-3">{!! Form::label('discount', 'Valor a descontar:' , ['class' => 'form-control-label']) !!}</div>
                         <div class="col-12 col-md-9">
-                            {!! Form::text('nombre', null , ['class' => 'form-control' , 'placeholder' => 'Valor a descontar.']) !!}
+                            {!! Form::number('discount', null , ['class' => 'form-control' , 'placeholder' => 'Valor a descontar.']) !!}
+                            <small class="form-text text-muted">Colocar el valor completo sin puntos ni comas.</small>
                         </div>
                     </div>
 
                     <div class="row form-group">
-                        <div class="col col-md-3">{!! Form::label('nombre', 'Firma Responsable:' , ['class' => 'form-control-label']) !!}</div>
+                        <div class="col col-md-3">{!! Form::label('rlast_name', 'Firma Responsable:' , ['class' => 'form-control-label']) !!}</div>
                         <div class="col-12 col-md-9">
                             {{$responsable->name}} {{$responsable->last_name}}
                         </div>
@@ -90,8 +91,7 @@
                         <div class="col col-md-3"></div>
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                         {!! Form::button('<i class="fa fa-check" aria-hidden="true"></i> Firmar y Aprobar', ['class' => 'btn btn-success', 'data-target' => '#exampleModal' , 'data-toggle' => 'modal']) !!}
-                        {!! Form::button('<i class="fa fa-times" aria-hidden="true"></i> Cancelar', ['class' => 'btn btn-danger'])!!}
-
+                        <a class="btn btn-danger" href="/pys" role="button"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
                             {{-- In Modal Confirmación --}}
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">

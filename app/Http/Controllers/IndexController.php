@@ -18,7 +18,13 @@ class IndexController extends Controller
     {
         $id = Auth::user()->id;
         $user = User::find($id);
-        return view('user', compact('user'));
+
+        if (Auth::user()->level < 990) {
+            return view('index.user', compact('user'));
+        } elseif(Auth::user()->level > 990) {
+            return view('index.admin', compact('user'));
+        }
+
     }
 
     /**

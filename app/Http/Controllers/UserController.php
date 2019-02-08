@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $employees = Employee::with('user', 'position', 'city')->get();
+        $employees = Employee::with('user', 'position', 'city')->where('id', '>' ,1)->get();
         return view('admin.user.listar', compact('employees'));
     }
 
@@ -84,7 +84,7 @@ class UserController extends Controller
     {
 
         $user = User::whereSlug($id)->firstOrFail();
-        return view('user', compact('user'));
+        return view('index.user', compact('user'));
     }
 
     /**

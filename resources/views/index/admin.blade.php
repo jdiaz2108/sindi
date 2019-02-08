@@ -1,6 +1,44 @@
 @extends('layouts.base')
-@section('title', 'Perfil')
+@section('title', 'Perfil Administrador')
 @section('content')
+<div class="row">
+        <div class="col-sm-6 col-lg-3">
+                        <div class="card text-white bg-flat-color-3 shadow">
+                            <div class="card-body">
+                                <div class="card-left pt-1 float-left">
+                                    <h3 class="mb-0 fw-r">
+                                        <span class="count">6569</span>
+                                    </h3>
+                                    <p class="text-light mt-1 m-0">Total Colaboradores</p>
+                                </div><!-- /.card-left -->
+
+                                <div class="card-right float-right text-right">
+                                    <i class="icon fade-5 icon-lg pe-7s-users"></i>
+                                </div><!-- /.card-right -->
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card text-white bg-flat-color-3">
+                            <div class="card-body">
+                                <div class="card-left pt-1 float-left">
+                                    <h3 class="mb-0 fw-r">
+                                        <span class="count">6569</span>
+                                    </h3>
+                                    <p class="text-light mt-1 m-0">Total clients</p>
+                                </div><!-- /.card-left -->
+
+                                <div class="card-right float-right text-right">
+                                    <i class="icon fade-5 icon-lg pe-7s-users"></i>
+                                </div><!-- /.card-right -->
+
+                            </div>
+
+                        </div>
+                    </div>
+</div>
 <div class="row">
     <div class="col-md-12 col-lg-4 col-xl-3">
         <form method="POST" action="/Em/{{$user->id}}" enctype="multipart/form-data">
@@ -29,7 +67,7 @@
                         <div class="card-text text-sm-center">
                             <label for="file" class="btn btn-primary">Seleccionar Archivo</label>
 
-                            <input id="file" type="file" name="file" hidden="" required="" />
+                            <input id="file" type="file" name="file" hidden="" required=""/>
                             <hr>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i> Subir</button>
                         </div>
@@ -48,33 +86,38 @@
             <div class="col-lg-12">
 
                 <div class="card-body">
-                    <form class="py-1 form-group" action="/pys/{{$user->slug}}/create">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">Desvincular usuario</button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header sincityred-gradient text-white">
-                                    <h5 class="modal-title" id="exampleModalLabel">Confirmación de Desvinculación</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true" class="text-white">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    En esta sección podrás dar inicio al proceso de desvinculación de uno de nuestros colaboradores. 
-                                    Al hacer clic en continuar, darás inicio y serás el responsable del proceso de desvinculación del usuario. 
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="submit" class="btn btn-danger">Continuar</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+                    @if(Auth::user()->id != $user->id)
+                        @if($user->status == 6)
+                            <form class="py-1 form-group" action="/pys/{{$user->slug}}/create">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">Desvincular usuario</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header sincityred-gradient text-white">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmación de Desvinculación</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true" class="text-white">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        En esta sección podrás dar inicio al proceso de desvinculación de uno de nuestros colaboradores. 
+                                        Al hacer clic en continuar, darás inicio y serás el responsable del proceso de desvinculación del usuario. 
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger">Continuar</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-
-                        </form>
-
+                            </form>
+                        @elseif($user->status == 5)
+                            <button type="button" class="btn btn-info btn-block text-light disabled">Desvinculando Usuario</button>
+                        @endif
+                    @endif
                     <div class="progress-box progress-1">
                         <h4 class="por-title">Visits</h4>
                         <div class="por-txt">96,930 Users (40%)</div>

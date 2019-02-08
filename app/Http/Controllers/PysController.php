@@ -21,12 +21,10 @@ class PysController extends Controller
     {
         $id = Auth::user()->id;
         $user = User::with('employee.position.depend.employee.user')->find($id);
-        $jefedirecto = $user->employee->position->depend->employee->user;
         if ($user->status == 5) {
+        $jefedirecto = $user->employee->position->depend->employee->user;
             $registerpys = Registerpys::whereUser_id($user->id)->with('concept', 'concept.area')->get();
-            $registerpys2 = Registerpys::whereUser_id($user->id)->with('concept', 'concept.area')->get();
-            $registerpys2 = $registerpys2->groupBy('concept.area_id');
-            return view('pys.table', compact('user', 'registerpys', 'registerpys2', 'jefedirecto'));
+            return view('pys.table', compact('user', 'registerpys', 'jefedirecto'));
         } elseif($user->status == 6) {
             return view('pys.desvinculacion') ;
         }
@@ -39,8 +37,23 @@ class PysController extends Controller
         // return $user2 = Employee::find(2)->user->get();
         $supervisor = Auth::user()->employee;
         $registerpys = Registerpys::whereUser_id(1)->with('concept', 'concept.area')->get();
-        return view('pys.list', compact('user', 'registerpys', 'supervisor'));
+        $auth = Auth::user();
+
+
+
+
+
+
+        $users = User::whereStatus(5)->with('employee', 'employee.position', 'registerpys', 'registerpys.concept', 'registerpys.concept.area')->get();
+
+        if ($auth->level < 390 || $auth->level > 350) {
+            return view('pys.level.talento', compact('users', 'registerpys', 'supervisor'));
+        } else {
+            return view('pys.list', compact('user', 'registerpys', 'supervisor'));
+        }
+        
     }
+
 
     /**
      * Show the form for creating a new resource.

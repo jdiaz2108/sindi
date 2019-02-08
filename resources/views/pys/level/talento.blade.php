@@ -1,13 +1,12 @@
 @extends('layouts.base')
-@section('title', 'Procesos activos de Paz y Salvo')
+@section('title', 'Procesos activos de Paz y Salvo Test')
 @section('content')
 {{-- <list-pys></list-pys> --}}
 @php $aux = 0 @endphp
     <div class="row">
         <div class="col-lg-12">
-            @foreach($user as $u)
+            @foreach($users as $u)
                                {{--  {{$u->employee->position->depend_id}} {{$supervisor->position_id}} --}}
-                @if($u->employee->position->depend_id == $supervisor->position_id || $supervisor->position->area_id == 2 || $supervisor->position->area_id == 3)
                     <div class="card mb-5">
                         <div class="card-header">
                             <strong class="card-title">
@@ -34,27 +33,31 @@
                                 </thead>
                                 <tbody>
                                     @foreach($u->registerpys as $pys)
-                                        @if($pys->concept->area->id == 1 && $u->employee->position->depend_id == $supervisor->position_id)
+
+@php
+                                    $rowspan = $u->registerpys->where('concept.area_id', $pys->concept->area->id)->count('area.id');
+                                    @endphp
+
+{{--                                         @if($pys->concept->area->id == 1 && $u->employee->position->depend_id == $supervisor->position_id) --}}
+
+    {{--                                     @endif
+                                        @if($pys->concept->area->id == $supervisor->position->area_id) --}}
                                             <tr>
-                                                <td class="text-center">{{ $pys->concept->area->name ?? '' }} </td>
-                                                <td class="text-center">{{ $pys->concept->concept}}</td>
-                                                <td class="text-center">@if($pys->concept->status == 'si')
-                                                        <span class="badge badge-success">SI</span>
-                                                    @elseif($pys->concept->status == 'no')
-                                                        <span class="badge badge-danger">NO</span>
-                                                    @else
-                                                        <span class="badge badge-secondary">N/A</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">{{ number_format($pys->discount, 0, ',', '.')}}</td>
-                                                <td class="text-center">{{ $pys->sign}}</td>
-                                                <td class="text-center">{{ $pys->observations}}</td>
-                                                <td class="text-center"><a class="btn btn-primary border" href="/pys/{{$pys->slug}}/edit" role="button">Verificar <i class="fa fa-check-square" aria-hidden="true"></i></a></td>
-                                            </tr>
-                                        @endif
-                                        @if($pys->concept->area->id == $supervisor->position->area_id)
-                                            <tr>
-                                                <td class="text-center">{{ $pys->concept->area->name ?? '' }}</td>
+                                    @if($aux != $rowspan)
+                                        <td rowspan="{{$rowspan}}" class="text-center text-white align-middle border-dark border blue-gradient" scope="row">
+                                            {{ $pys->concept->area->name ?? '' }}
+                                            <br>
+                                            Responsable: 
+                                            <br>
+                                            John Diaz
+                                            <br>
+                                            Correo: 
+                                            <br>
+                                            jdiaz2108@hotmail.com
+                                        </td>
+                                        @php $aux = $rowspan @endphp
+                                    @endif 
+                                           {{--      <td class="text-center">{{ $pys->concept->area->name ?? '' }}</td> --}}
                                                 <td class="text-center">{{ $pys->concept->concept}}</td>
                                                 <td class="text-center">@if($pys->status == 'si')
                                                         <span class="badge badge-success">SI</span>
@@ -67,6 +70,7 @@
                                                 <td class="text-center">{{ $pys->discount ? '$ '.number_format($pys->discount, 0, ',', '.') : ''}}</td>
                                                 <td class="text-center">{{ $pys->sign}}</td>
                                                 <td class="text-center">{{ $pys->observations}}</td>
+                                                @if($pys->concept->area_id == 3 ||  ($u->employee->position->depend_id == $supervisor->position_id && $pys->concept->area_id == 1))
                                                 <td class="text-center">
                                                     @if($pys->signer)
                                                         <a class="btn btn-secondary border" href="/pys/{{$pys->slug}}/edit" role="button">Verificado <i class="fa fa-check-square" aria-hidden="true"></i></a>
@@ -74,14 +78,22 @@
                                                         <a class="btn btn-primary border" href="/pys/{{$pys->slug}}/edit" role="button">Verificar <i class="fa fa-check-square" aria-hidden="true"></i></a>
                                                     @endif
                                                 </td>
+                                                @elseif($pys->concept->area_id != 3)
+                                                    <td class="text-center align-middle" scope="row">
+                                                        @if($pys->sign)
+                                                        <a class="btn btn-success disabled" href="#" role="button" disabled>Revisado</a>
+                                                        @else
+                                                        <a class="btn btn-secondary disabled" href="#" role="button" disabled>Sin Revisar</a>
+                                                        @endif
+                                                    </td>
+                                                @endif
                                             </tr>
-                                        @endif
+{{--                                         @endif --}}
                                      @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                @endif
             @endforeach
         </div>
     </div>
