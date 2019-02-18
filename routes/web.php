@@ -13,6 +13,8 @@
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+
 Route::get('/foo', function () {
 	$user = App\User::find(1)->firstOrFail();
         \Mail::send('email.recoveryPass', compact('user'), function ($message) {
@@ -56,12 +58,13 @@ Route::get('/prueba', 'UserController@updateStatus');
 //In - Rutan con el Middleware para la Autenticacion
 Route::group(['middleware' => ['auth']], function () {
 
+	Route::resource('/map', 'MapGeoController');
+
 	Route::resource('/', 'IndexController');
 
 	//In - Ruta CRUD relacionada con Empleados
 	Route::resource('/Em', 'EmployeeControler');
 	//Fn - Ruta CRUD relacionada con Empleados
-
 
 
 	//In Actualización de contraseña esta habilitada para todos los Usuarios

@@ -20,28 +20,17 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-handshake-o"></i>Paz y Salvo</a>
                         <ul class="sub-menu children dropdown-menu">
                                 <li><i class="fa fa-handshake-o"></i><a href="/pysEstado">Estado Paz y Salvo</a></li>
+                            @if(Auth::user()->level >= 355)
+                                <li><i class="fa fa-handshake-o"></i><a href="/pys">Procesos Activos</a></li>
+                            @endif
                             @if(Auth::user()->level == 992)
-                            <li><i class="fa fa-handshake-o"></i><a href="/pys">Procesos Activos</a></li>
+                            
                             <li><i class="fa fa-handshake-o"></i><a href="/pys/{{Auth::user()->slug}}">Buttons</a></li>
                             <li><i class="fa fa-handshake-o"></i><a href="ui-badges.html">Badges</a></li>
                             @endif
                         </ul>
                     </li>
 @if(Auth::user()->level == 992)
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                            <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
-                        </ul>
-                    </li>
 
                     <li class="menu-title">Icons</li><!-- /.menu-title -->
 

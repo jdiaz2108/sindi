@@ -182,6 +182,8 @@ return [
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
+
+        App\Providers\DataServiceProvider::class,
         // Fn JD
 
     ],

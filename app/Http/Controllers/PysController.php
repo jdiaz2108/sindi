@@ -20,11 +20,10 @@ class PysController extends Controller
     public function estado()
     {
         $id = Auth::user()->id;
-        $user = User::with('employee.position.depend.employee.user')->find($id);
+        $user = User::find($id);
         if ($user->status == 5) {
-        $jefedirecto = $user->employee->position->depend->employee->user;
             $registerpys = Registerpys::whereUser_id($user->id)->with('concept', 'concept.area')->get();
-            return view('pys.table', compact('user', 'registerpys', 'jefedirecto'));
+            return view('pys.table', compact('user', 'registerpys'));
         } elseif($user->status == 6) {
             return view('pys.desvinculacion') ;
         }
@@ -32,25 +31,15 @@ class PysController extends Controller
 
     public function index()
     {
-        // $user = User::whereStatus(5)->with('employee', 'employee.position')->get();
-        $user = User::whereStatus(5)->with('employee', 'employee.position', 'registerpys', 'registerpys.concept', 'registerpys.concept.area')->get();
-        // return $user2 = Employee::find(2)->user->get();
-        $supervisor = Auth::user()->employee;
-        $registerpys = Registerpys::whereUser_id(1)->with('concept', 'concept.area')->get();
-        $auth = Auth::user();
+
+        // $registerpys = Registerpys::whereUser_id(1)->with('concept', 'concept.area')->get();
 
 
+        $users = User::whereStatus(5)->with('employee.position.depend.employee.user', 'registerpys.concept.area')->get();
 
 
+            return view('pys.level.talento', compact('users'));
 
-
-        $users = User::whereStatus(5)->with('employee', 'employee.position', 'registerpys', 'registerpys.concept', 'registerpys.concept.area')->get();
-
-        if ($auth->level < 390 || $auth->level > 350) {
-            return view('pys.level.talento', compact('users', 'registerpys', 'supervisor'));
-        } else {
-            return view('pys.list', compact('user', 'registerpys', 'supervisor'));
-        }
         
     }
 

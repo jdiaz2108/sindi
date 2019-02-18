@@ -24,7 +24,7 @@
                         <a href="#"><i class="fa fa-pinterest pr-1"></i></a>
                     </div>
 
-                    @if(Auth::user()->level >= 355)
+                    @if($auth->level >= 355)
                         <hr>
                         <div class="card-text text-sm-center">
                             <label for="file" class="btn btn-primary">Seleccionar Archivo</label>
@@ -38,8 +38,8 @@
             </div>
         </form>
 
-        <perfil-edit-user :level="{{Auth::user()->level}}" :user="{{$user}}"></perfil-edit-user>
-@if(Auth::user()->level > 200)
+        <perfil-edit-user :level="{{$auth->level}}" :user="{{$user}}"></perfil-edit-user>
+@if($auth->level > 200)
     <div class="card">
         <div class="card-header">
             <label class="label label-default align-baseline font-weight-bold">Acciones Admin</label>
@@ -49,8 +49,8 @@
 
                 <div class="card-body">
 
-                    @if(Auth::user()->id != $user->id)
-                        @if($user->status == 6)
+                    @if($auth->id != $user->id)
+                        @if($user->status == 6 || $user->status == 1)
                             <form class="py-1 form-group" action="/pys/{{$user->slug}}/create">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">Desvincular usuario</button>

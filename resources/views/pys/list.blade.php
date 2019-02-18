@@ -5,9 +5,9 @@
 @php $aux = 0 @endphp
     <div class="row">
         <div class="col-lg-12">
-            @foreach($user as $u)
+            @foreach($users as $u)
                                {{--  {{$u->employee->position->depend_id}} {{$supervisor->position_id}} --}}
-                @if($u->employee->position->depend_id == $supervisor->position_id || $supervisor->position->area_id == 2 || $supervisor->position->area_id == 3)
+                @if($u->employee->position->depend_id == $auth->employee->position_id || $auth->employee->position->area_id == 2 || $auth->employee->position->area_id == 3)
                     <div class="card mb-5">
                         <div class="card-header">
                             <strong class="card-title">
@@ -34,7 +34,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($u->registerpys as $pys)
-                                        @if($pys->concept->area->id == 1 && $u->employee->position->depend_id == $supervisor->position_id)
+                                        @if($pys->concept->area->id == 1 && $u->employee->position->depend_id == $auth->employee->position_id)
                                             <tr>
                                                 <td class="text-center">{{ $pys->concept->area->name ?? '' }} </td>
                                                 <td class="text-center">{{ $pys->concept->concept}}</td>
@@ -52,7 +52,7 @@
                                                 <td class="text-center"><a class="btn btn-primary border" href="/pys/{{$pys->slug}}/edit" role="button">Verificar <i class="fa fa-check-square" aria-hidden="true"></i></a></td>
                                             </tr>
                                         @endif
-                                        @if($pys->concept->area->id == $supervisor->position->area_id)
+                                        @if($pys->concept->area->id == $auth->employee->position->area_id)
                                             <tr>
                                                 <td class="text-center">{{ $pys->concept->area->name ?? '' }}</td>
                                                 <td class="text-center">{{ $pys->concept->concept}}</td>

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use Alert;
-use Auth;
+use App\Models\MapGeo;
 
-class IndexController extends Controller
+class MapGeoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +14,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-
-        if (Auth::user()->level < 990) {
-            return view('index.user');
-        } elseif(Auth::user()->level > 990) {
-            return view('index.admin');
-        }
-
+        return view('mapgeo.mapgeo');
     }
 
     /**
@@ -43,7 +35,13 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Geo = MapGeo::create([
+            'user_id' => 1,
+            'place_id' => 1,
+            'latitude' => $request->lat,
+            'longitude' => $request->lng,
+        ]);
+        return $Geo;
     }
 
     /**
@@ -77,7 +75,7 @@ class IndexController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'hola';
+        //
     }
 
     /**

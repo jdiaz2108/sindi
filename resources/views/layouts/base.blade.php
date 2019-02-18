@@ -86,7 +86,6 @@
 </head>
 
 <body>
-
     <div id="app">
             @if(Auth::user()->status > 1)
                 <!-- In Menu Izquierda -->
