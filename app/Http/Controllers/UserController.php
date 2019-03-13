@@ -83,8 +83,8 @@ class UserController extends Controller
     public function show($id)
     {
 
-        $user = User::whereSlug($id)->firstOrFail();
-        return view('index.user', compact('user'));
+        $usuario = User::whereSlug($id)->firstOrFail();
+        return view('index.user', compact('usuario'));
     }
 
     /**

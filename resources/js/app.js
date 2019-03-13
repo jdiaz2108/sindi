@@ -23,13 +23,17 @@ window.Vue = require('vue');
 Vue.component('login-user', require('./components/auth/loginUser.vue').default);
 Vue.component('reset-pass', require('./components/auth/resetPass.vue').default);
 
+Vue.component('l-leftpanel', require('./components/layouts/leftpanel.vue').default);
+Vue.component('l-topbar', require('./components/layouts/topbar.vue').default);
+
+Vue.component('vue-permisos', require('./components/permisos/Permisos.vue').default);
 
 Vue.component('laboral-edit-user', require('./components/LaboralEditUser.vue').default);
 Vue.component('create-user', require('./components/CreateUser.vue').default);
 Vue.component('personal-edit-user', require('./components/personalEditUser.vue').default);
 Vue.component('perfil-edit-user', require('./components/perfilEditUser.vue').default);
 
-Vue.component('Dash', require('./components/Dashboard.vue').default);
+Vue.component('geo-map', require('./components/geolocalizador/Map.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,5 +42,13 @@ Vue.component('Dash', require('./components/Dashboard.vue').default);
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data() {
+    	return {
+    		hola: 'mi perro',
+    		drawer: true,
+    	}
+    }
 });
+
+

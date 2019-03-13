@@ -1,5 +1,6 @@
 <header id="header" class="header">
-            <div class="top-left">
+    <l-topbar :user="{{$user}}"></l-topbar>
+{{--             <div class="top-left">
                 <div class="navbar-header text-center">
                     <a class="navbar-brand img-fluid m-0 p-0 mx-auto" href="./"><img src="{{ asset('images/logo_pmk.png') }}" style="max-height: 173" alt="Logo"></a>
                     <a class="navbar-brand hidden" href="./"><img src="{{ asset('images/logo2.png') }}" alt="Logo"></a>
@@ -111,5 +112,5 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
 </header>

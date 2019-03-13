@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\MapGeo;
-use Auth;
 
-class MapGeoController extends Controller
+class PermisosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +13,7 @@ class MapGeoController extends Controller
      */
     public function index()
     {
-        // return Auth::user();
-        return view('mapgeo.mapgeo');
+        return view('permisos.test');
     }
 
     /**
@@ -37,22 +34,7 @@ class MapGeoController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
-        $user = Auth::user();
-
-        $date = getdate();
-
-        $Geo = MapGeo::create([
-            'user_id' => $user->id,
-            'place_id' => 1,
-            'latitude' => $request->lat,
-            'longitude' => $request->lng,
-            'status' => 1,
-            'day' => $date['mday'],
-            'month' => $date['mon'],
-            'year' => $date['year']
-        ]);
-        return $Geo;
+        //
     }
 
     /**
@@ -63,20 +45,7 @@ class MapGeoController extends Controller
      */
     public function show($id)
     {
-        $hoy = getdate();
-        $hoy['mday'];
-        $user = Auth::user();
-        $mapgeo = MapGeo::whereUser_id($user->id)->get()->last();
-        if ($mapgeo) {
-           if ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] ) {
-               return $mapgeo;
-            } else {
-                return 'null';
-            }
-        }
-
-        return 'nada';
-        
+        //
     }
 
     /**

@@ -86,21 +86,25 @@
 </head>
 
 <body>
+    <v-app>
     <div id="app">
             @if(Auth::user()->status > 1)
                 <!-- In Menu Izquierda -->
-                @include('layouts.leftpanel')
+                
                 <!-- Fn Menu Izquierda -->
 
             @endif 
     <!-- Right Panel -->
-    <div id="right-panel" class="right-panel">
+
+
 
         <!-- In Barra Superior -->
-        @include('layouts.topbar')
+         @include('layouts.leftpanel')
+       @include('layouts.topbar')
+    
         <!-- Fn Barra Superior -->
         @if(Auth::user()->status > 1)
-        <div class="breadcrumbs">
+{{--         <div class="breadcrumbs">
             <div class="breadcrumbs-inner shadow rounded blue-gradient">
                 <div class="row m-0">
                     <div class="col-sm-4">
@@ -122,32 +126,38 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         @endif
         <!-- Content -->
-        <div class="content">
-            <!-- Animated -->
-            <div class="animated fadeIn">
 
-                <main class="py-3">
+
+<v-content>
+      <v-container fill-height>
+        <v-layout justify-center align-center>
+    
+
                     @if(Auth::user()->status > 1)
                         @yield('content')
                     @else
                         @include('auth.passwords.update')
                     @endif
-                </main>
 
-            </div>
-            <!-- .animated -->
-        </div>
+
+ 
+        </v-layout>
+      </v-container>
+    </v-content>
+
         <!-- /.content -->
-        <div class="clearfix"></div>
+     {{--    <div class="clearfix"></div> --}}
         <!-- Ini Footer -->
-        @include('layouts.footer')
+   {{--      @include('layouts.footer') --}}
         <!-- Fn Footer -->
     </div>
 
-</div>
+</v-app>
+
+
     <!-- /#right-panel -->
 
     <!-- Scripts -->

@@ -1,6 +1,7 @@
 @extends('layouts.base')
 @section('title', 'Creación de Usuario')
 @section('content')
+<div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -10,5 +11,6 @@
                             <create-user></create-user>
             </div>
         </div>
+    </div>
     </div>
 @endsection

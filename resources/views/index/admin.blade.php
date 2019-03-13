@@ -1,6 +1,7 @@
 @extends('layouts.base')
 @section('title', 'Perfil Administrador')
 @section('content')
+<div class="container-fluid">
 <div class="row">
         <div class="col-sm-6 col-lg-3">
                         <div class="card text-white bg-flat-color-3 shadow">
@@ -161,5 +162,5 @@
     </div>
 
 </div>
-
+</div>
 @endsection

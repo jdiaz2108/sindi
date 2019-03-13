@@ -2,6 +2,7 @@
 @section('title', 'Verificación componente de Paz y Salvo')
 @section('content')
 {{-- <list-pys></list-pys> --}}
+<div class="container-fluid">
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -119,5 +120,5 @@
         </div>
     </div>
 </div>
-
+</div>
 @endsection

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class MapGeo extends Model
 {
     protected $fillable = [
-        'user_id', 'place_id', 'latitude', 'longitude'
+        'user_id', 'place_id', 'latitude', 'longitude', 'status', 'day', 'month', 'year'
     ];
 }

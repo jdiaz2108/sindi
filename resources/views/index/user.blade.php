@@ -1,6 +1,7 @@
 @extends('layouts.base')
 @section('title', 'Perfil')
 @section('content')
+<div class="container-fluid">
 <div class="row">
     <div class="col-md-12 col-lg-4 col-xl-3">
         <form method="POST" action="/Em/{{$user->id}}" enctype="multipart/form-data">
@@ -123,5 +124,5 @@
     </div>
 
 </div>
-
+</div>
 @endsection

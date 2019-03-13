@@ -39,17 +39,21 @@
                                         @if($pys->concept->area->id == 1)
                                         Responsable: 
                                         <br>
-
                                         {{$user->employee->position->depend->employee->user->name}} {{$user->employee->position->depend->employee->user->last_name}}
                                         <br>
                                         Correo: 
                                         <br>
                                         {{$user->employee->position->depend->employee->email_corporate}}
+                                        @elseif($pys->concept->area->id == 3) Responsable:
+                                        <br>
+                                        {{$talentoHumano->name}} {{$talentoHumano->last_name}}
+                                        <br>
+                                        Correo: {{$talentoHumano->email}}
                                         @else Responsable:
                                         <br>
-                                        Diana
+                                        Juan
                                         <br>
-                                        Correo: diana@correo.com 
+                                        Correo: juan@mail.com
                                         @endif
                                         </td>
                                         @php $aux = $rowspan @endphp

@@ -58,6 +58,8 @@ Route::get('/prueba', 'UserController@updateStatus');
 //In - Rutan con el Middleware para la Autenticacion
 Route::group(['middleware' => ['auth']], function () {
 
+	Route::resource('/permisos', 'PermisosController');
+
 	Route::resource('/map', 'MapGeoController');
 
 	Route::resource('/', 'IndexController');
