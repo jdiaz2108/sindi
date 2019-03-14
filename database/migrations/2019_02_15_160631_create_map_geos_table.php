@@ -16,9 +16,13 @@ class CreateMapGeosTable extends Migration
         Schema::create('map_geos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('status');
             $table->string('place_id');
             $table->string('latitude');
             $table->string('longitude');
+            $table->integer('day');
+            $table->integer('month');
+            $table->integer('year');
             $table->timestamps();
         });
     }
