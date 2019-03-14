@@ -2682,7 +2682,7 @@ __webpack_require__.r(__webpack_exports__);
 
 Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
   load: {
-    key: 'AIzaSyAS-tf280pHe2hnXH29cv0SnMMI-HoG5UE',
+    key: 'AIzaSyCoJPXuQpiIBxK6gq3OSF_OrSqgEPAUkI4',
     libraries: "places" // necessary for places input
 
   }
@@ -2693,24 +2693,17 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
     return {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
-      center: {
-        lat: 45.508,
-        lng: -73.587
-      },
+      center: {},
       position: {
         position: null
       },
       markers: [],
-      places: [],
-      currentPlace: {},
-      positionStart: {},
-      positionEnd: {},
       btnstart: null,
       btnend: null
     };
   },
   created: function created() {
-    this.getMapGeo2();
+    this.getMapGeo();
   },
   mounted: function mounted() {
     this.geolocate();
@@ -2727,30 +2720,20 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
           status: 1
         };
         _this.position.position = _this.center;
-        _this.currentPlace = _this.center;
         _this.markers = [_this.position];
       });
     },
     MapStart: function MapStart() {
       var _this2 = this;
 
-      axios.post('/map', this.currentPlace).then(function (response) {
-        _this2.getMapGeo2();
+      axios.post('/map', this.center).then(function (response) {
+        _this2.getMapGeo();
 
-        _this2.Swal('Se ha guardado tu hora de llegada.');
-
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-    MapEnd: function MapEnd() {
-      var _this3 = this;
-
-      axios.post('/map', this.currentPlace).then(function (response) {
-        _this3.getMapGeo2();
-
-        _this3.Swal('Se ha guardado tu hora de llegada.');
+        if (_this2.center.status == 1) {
+          _this2.Swal('Se ha guardado tu hora de Llegada.');
+        } else if (_this2.center.status == 2) {
+          _this2.Swal('Se ha guardado tu hora de Salida.');
+        }
 
         console.log(response);
       }).catch(function (error) {
@@ -2758,27 +2741,37 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
       });
     },
     getMapGeo: function getMapGeo() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.get('/map/show').then(function (response) {
-        _this4.positionStart = response.data;
-        console.Log(response.data);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-    getMapGeo2: function getMapGeo2() {
-      var _this5 = this;
-
-      axios.get('/map/show').then(function (response) {
-        if (response.data != null) {
-          _this5.positionStart = response.data;
-          _this5.btnstart = false;
-          _this5.btnend = true;
-          _this5.currentPlace.status = 2;
-        } else {
-          _this5.btnstart = true;
-          _this5.btnend = false;
+        if (response.data != 'null' && response.data != 'cierre') {
+          _this3.btnstart = {
+            disabled: true,
+            dark: false
+          };
+          _this3.btnend = {
+            disabled: false,
+            dark: true
+          };
+          _this3.center.status = 2;
+        } else if (response.data == 'null') {
+          _this3.btnstart = {
+            disabled: false,
+            dark: true
+          };
+          _this3.btnend = {
+            disabled: true,
+            dark: false
+          };
+        } else if (response.data == 'cierre') {
+          _this3.btnstart = {
+            disabled: true,
+            dark: false
+          };
+          _this3.btnend = {
+            disabled: true,
+            dark: false
+          };
         }
 
         ;
@@ -2880,12 +2873,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
+  created: function created() {
+    this.drawerMDown();
+  },
   data: function data() {
     return {
       items: [{
         action: 'account_circle',
         title: 'Usuarios',
-        active: true,
         items: [{
           title: 'Listar Usuarios',
           action: '/U'
@@ -2911,10 +2906,12 @@ __webpack_require__.r(__webpack_exports__);
           action: '/permisos'
         }]
       }, {
-        action: 'directions_run',
-        title: 'Family',
+        action: 'person_pin_circle',
+        title: 'Mapa',
+        active: true,
         items: [{
-          title: 'List Item'
+          title: 'Geolocalizador',
+          action: '/map'
         }]
       }, {
         action: 'alarm_add',
@@ -2936,6 +2933,14 @@ __webpack_require__.r(__webpack_exports__);
         }]
       }]
     };
+  },
+  methods: {
+    drawerMDown: function drawerMDown() {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        console.log(this.$parent.drawer);
+        this.$parent.drawer = false;
+      }
+    }
   }
 });
 
@@ -60277,7 +60282,7 @@ var render = function() {
     "v-layout",
     { attrs: { row: "", wrap: "" } },
     [
-      _c("v-flex", { attrs: { xs12: "", md5: "", "text-xs-center": "" } }, [
+      _c("v-flex", { attrs: { xs12: "", md6: "", "text-xs-center": "" } }, [
         _c(
           "div",
           [
@@ -60286,8 +60291,8 @@ var render = function() {
                   "v-btn",
                   {
                     attrs: {
-                      disabled: _vm.btnend,
-                      dark: _vm.btnstart,
+                      disabled: _vm.btnstart.disabled,
+                      dark: _vm.btnstart.dark,
                       large: "",
                       color: "blue"
                     },
@@ -60305,29 +60310,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("v-flex", { attrs: { xs12: "", md2: "", "text-xs-center": "" } }, [
-        _c(
-          "div",
-          [
-            _c(
-              "v-btn",
-              {
-                attrs: { dark: "", fab: "", color: "yellow" },
-                on: {
-                  click: function($event) {
-                    return _vm.getMapGeo2()
-                  }
-                }
-              },
-              [_c("v-icon", { attrs: { color: "black" } }, [_vm._v("cached")])],
-              1
-            )
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("v-flex", { attrs: { xs12: "", md5: "", "text-xs-center": "" } }, [
+      _c("v-flex", { attrs: { xs12: "", md6: "", "text-xs-center": "" } }, [
         _c(
           "div",
           [
@@ -60336,14 +60319,14 @@ var render = function() {
                   "v-btn",
                   {
                     attrs: {
-                      disabled: _vm.btnstart,
-                      dark: _vm.btnend,
+                      disabled: _vm.btnend.disabled,
+                      dark: _vm.btnend.dark,
                       large: "",
                       color: "red"
                     },
                     on: {
                       click: function($event) {
-                        return _vm.MapEnd()
+                        return _vm.MapStart()
                       }
                     }
                   },
@@ -60357,19 +60340,8 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-flex",
-        { attrs: { xs12: "", sm12: "", "text-xs-center": "" } },
+        { attrs: { xs12: "", sm12: "", "text-xs-center": "", "my-5": "" } },
         [
-          _vm._v("\n        Posicion actual:\n        "),
-          _c("br"),
-          _vm._v(
-            "\n        Latitud: " +
-              _vm._s(_vm.position.position.lat) +
-              " , Longitud: " +
-              _vm._s(_vm.position.position.lng) +
-              " .\n        "
-          ),
-          _c("br"),
-          _vm._v(" "),
           _c(
             "gmap-map",
             {

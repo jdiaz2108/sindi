@@ -11,8 +11,8 @@
 						<strong class="card-title">Geolocalizador</strong>
 					</div>
 					<div class="card-body">
-						<div class="card col-12 m-5 mx-auto border-dark">
-							<geo-map class="shadow"></geo-map>
+						<div class="col-12 m-5 mx-auto">
+							<geo-map ></geo-map>
 						</div>
 					</div>
 				</div>

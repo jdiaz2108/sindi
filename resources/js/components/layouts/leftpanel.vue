@@ -68,12 +68,14 @@
   import Vuetify from 'vuetify'
   export default {
     props: ['user'],
+    created() {
+            this.drawerMDown();
+        },
       data: () => ({
         items: [
           {
             action: 'account_circle',
             title: 'Usuarios',
-            active: true,
             items: [
               { title: 'Listar Usuarios',
                 action: '/U' },
@@ -100,10 +102,12 @@
             ]
           },
           {
-            action: 'directions_run',
-            title: 'Family',
+            action: 'person_pin_circle',
+            title: 'Mapa',
+            active: true,
             items: [
-              { title: 'List Item' }
+              { title: 'Geolocalizador',
+              action: '/map' }
             ]
           },
           {
@@ -129,5 +133,13 @@
           }
         ],
     }),
+      methods: {
+            drawerMDown: function() {
+              if (this.$vuetify.breakpoint.mdAndDown) {
+                console.log(this.$parent.drawer);
+                this.$parent.drawer = false;
+              }
+            }
+      }
     }
 </script>

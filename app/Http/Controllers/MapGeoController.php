@@ -37,7 +37,7 @@ class MapGeoController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+
         $user = Auth::user();
 
         $date = getdate();
@@ -47,7 +47,7 @@ class MapGeoController extends Controller
             'place_id' => 1,
             'latitude' => $request->lat,
             'longitude' => $request->lng,
-            'status' => 1,
+            'status' => $request->status,
             'day' => $date['mday'],
             'month' => $date['mon'],
             'year' => $date['year']
@@ -61,21 +61,35 @@ class MapGeoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+
+
+
+
+
+if($request->ajax()){
         $hoy = getdate();
         $hoy['mday'];
         $user = Auth::user();
         $mapgeo = MapGeo::whereUser_id($user->id)->get()->last();
         if ($mapgeo) {
-           if ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] ) {
-               return $mapgeo;
+           if ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] AND $mapgeo->status == 1) {
+               return response()->json( $mapgeo , 200);
+            } elseif ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] AND $mapgeo->status == 2) {
+               return response()->json( 'cierre' , 200);
             } else {
-                return 'null';
+               return response()->json( 'null' , 200);
             }
         }
 
-        return 'nada';
+        return response()->json( 'null' , 200);
+
+} else { return redirect('/'); }
+
+
+
+
         
     }
 

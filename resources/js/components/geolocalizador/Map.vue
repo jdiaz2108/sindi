@@ -1,35 +1,35 @@
 <template>
     <v-layout row wrap>
-        <v-flex xs12 md5 text-xs-center>
+        <v-flex xs12 md6 text-xs-center>
             <div>
                 <v-btn @click="MapStart()"
                         v-if="btnstart != null"
-                        :disabled="btnend"
-                        :dark="btnstart"
+                        :disabled="btnstart.disabled"
+                        :dark="btnstart.dark"
                         large  color="blue">Guardar llegada</v-btn>
             </div>
         </v-flex>
 
-        <v-flex xs12 md2 text-xs-center>
+<!--         <v-flex xs12 md2 text-xs-center>
             <div>
-                <v-btn @click="getMapGeo2()" dark fab color="yellow"><v-icon color="black">cached</v-icon></v-btn>
+                <v-btn @click="getMapGeo()" dark fab color="yellow"><v-icon color="black">cached</v-icon></v-btn>
             </div>
-        </v-flex>
+        </v-flex> -->
 
-        <v-flex xs12 md5 text-xs-center>
+        <v-flex xs12 md6 text-xs-center>
             <div>
-                <v-btn @click="MapEnd()" 
+                <v-btn @click="MapStart()" 
                         v-if="btnend != null"
-                        :disabled="btnstart"
-                        :dark="btnend"
+                        :disabled="btnend.disabled"
+                        :dark="btnend.dark"
                         large color="red">Guardar Salida</v-btn>
             </div>
         </v-flex>
-        <v-flex xs12 sm12 text-xs-center>
-            Posicion actual:
+        <v-flex xs12 sm12 text-xs-center my-5 >
+<!--             Posicion actual:
             <br>
             Latitud: {{position.position.lat}} , Longitud: {{position.position.lng}} .
-            <br>
+            <br> -->
                 <gmap-map
                 :center="center"
                 :zoom="16"
@@ -52,7 +52,7 @@
 
     Vue.use(VueGoogleMaps, {
         load: {
-            key: 'AIzaSyAS-tf280pHe2hnXH29cv0SnMMI-HoG5UE',
+            key: 'AIzaSyCoJPXuQpiIBxK6gq3OSF_OrSqgEPAUkI4',
             libraries: "places" // necessary for places input
         }
     });
@@ -62,21 +62,17 @@
             return {
             // default to Montreal to keep it simple
             // change this to whatever makes sense
-                center: { lat: 45.508, lng: -73.587 },
+                center: {},
                 position: {
-                position: null
+                    position: null
                 },
                 markers: [],
-                places: [],
-                currentPlace: {},
-                positionStart: {},
-                positionEnd: {},
                 btnstart: null,
                 btnend: null
             };
         },
         created() {
-            this.getMapGeo2();
+            this.getMapGeo();
         },
         mounted() {
             this.geolocate();
@@ -91,28 +87,19 @@
                         status: 1
                     };
                     this.position.position = this.center;
-                    this.currentPlace = this.center;
                     this.markers = [this.position,];
                 });
             },
             MapStart: function() {
                 axios
-                    .post('/map', this.currentPlace)
+                    .post('/map', this.center)
                     .then(response => {
-                        this.getMapGeo2();
-                        this.Swal('Se ha guardado tu hora de llegada.');
-                    console.log(response)
-                    })
-                    .catch(function (error) {
-                    console.log(error)
-                    });
-            },
-            MapEnd: function() {
-                axios
-                    .post('/map', this.currentPlace)
-                    .then(response => {
-                        this.getMapGeo2();
-                        this.Swal('Se ha guardado tu hora de llegada.');
+                        this.getMapGeo();
+                        if (this.center.status == 1) { 
+                            this.Swal('Se ha guardado tu hora de Llegada.');
+                        } else if (this.center.status == 2) {
+                            this.Swal('Se ha guardado tu hora de Salida.');
+                        }
                     console.log(response)
                     })
                     .catch(function (error) {
@@ -120,28 +107,38 @@
                     });
             },
             getMapGeo: function() {
-                axios
-                    .get('/map/show')
-                    .then(response => {
-                    this.positionStart = response.data;
-                    console.Log(response.data)
-                    })
-                    .catch(error => {
-                    console.log(error)
-                    })
-            },
-            getMapGeo2: function() {
 
                 axios.get('/map/show')
                     .then(response => {
-                        if (response.data != null) {
-                            this.positionStart = response.data;
-                            this.btnstart = false;
-                            this.btnend = true;
-                            this.currentPlace.status = 2;
-                        } else { 
-                            this.btnstart = true;
-                            this.btnend = false; };
+                        if (response.data != 'null' && response.data != 'cierre') {
+                            this.btnstart = {
+                                disabled: true,
+                                dark: false
+                            };
+                            this.btnend = {
+                                disabled: false,
+                                dark: true
+                            };
+                            this.center.status = 2;
+                        } else if(response.data == 'null') {
+                            this.btnstart = {
+                                disabled: false,
+                                dark: true
+                            };
+                            this.btnend = {
+                                disabled: true,
+                                dark: false
+                            }; 
+                        } else if(response.data == 'cierre') {
+                            this.btnstart = {
+                                disabled: true,
+                                dark: false
+                            };
+                            this.btnend = {
+                                disabled: true,
+                                dark: false
+                            }; 
+                        };
                         console.log(response.data);
                     })
                     .catch(function (error) {
