@@ -25,6 +25,8 @@
                         large color="red">Guardar Salida</v-btn>
             </div>
         </v-flex>
+        <v-btn v-if="btnact" :disabled="btnload" @click="btnActualizar()" class="mx-auto mt-3" :loading="btnload" large color="amber darken-3" :dark="!btnload">Registrar Otra Entrada este mismo dia
+  </v-btn>
         <v-flex xs12 sm12 text-xs-center my-5 >
 <!--             Posicion actual:
             <br>
@@ -68,7 +70,9 @@
                 },
                 markers: [],
                 btnstart: null,
-                btnend: null
+                btnend: null,
+                btnact: false,
+                btnload: false
             };
         },
         created() {
@@ -106,6 +110,16 @@
                     console.log(error)
                     });
             },
+            btnActualizar: function() {
+                this.btnload = true;
+                this.btnstart = {
+                    disabled: false,
+                    dark: true
+                };
+                setTimeout(() => (this.btnload = false,
+                    this.btnact = false), 2000);
+                this.Swal('Puedes Registrar otra entrada el dia de Hoy');
+            },
             getMapGeo: function() {
 
                 axios.get('/map/show')
@@ -137,7 +151,9 @@
                             this.btnend = {
                                 disabled: true,
                                 dark: false
-                            }; 
+                            };
+                            this.btnact = true;
+                            this.center.status = 1;
                         };
                         console.log(response.data);
                     })

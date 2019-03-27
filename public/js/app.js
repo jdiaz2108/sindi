@@ -2678,6 +2678,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
@@ -2699,7 +2701,9 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
       },
       markers: [],
       btnstart: null,
-      btnend: null
+      btnend: null,
+      btnact: false,
+      btnload: false
     };
   },
   created: function created() {
@@ -2740,38 +2744,53 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
         console.log(error);
       });
     },
-    getMapGeo: function getMapGeo() {
+    btnActualizar: function btnActualizar() {
       var _this3 = this;
+
+      this.btnload = true;
+      this.btnstart = {
+        disabled: false,
+        dark: true
+      };
+      setTimeout(function () {
+        return _this3.btnload = false, _this3.btnact = false;
+      }, 2000);
+      this.Swal('Puedes Registrar otra entrada el dia de Hoy');
+    },
+    getMapGeo: function getMapGeo() {
+      var _this4 = this;
 
       axios.get('/map/show').then(function (response) {
         if (response.data != 'null' && response.data != 'cierre') {
-          _this3.btnstart = {
+          _this4.btnstart = {
             disabled: true,
             dark: false
           };
-          _this3.btnend = {
+          _this4.btnend = {
             disabled: false,
             dark: true
           };
-          _this3.center.status = 2;
+          _this4.center.status = 2;
         } else if (response.data == 'null') {
-          _this3.btnstart = {
+          _this4.btnstart = {
             disabled: false,
             dark: true
           };
-          _this3.btnend = {
+          _this4.btnend = {
             disabled: true,
             dark: false
           };
         } else if (response.data == 'cierre') {
-          _this3.btnstart = {
+          _this4.btnstart = {
             disabled: true,
             dark: false
           };
-          _this3.btnend = {
+          _this4.btnend = {
             disabled: true,
             dark: false
           };
+          _this4.btnact = true;
+          _this4.center.status = 1;
         }
 
         ;
@@ -60337,6 +60356,28 @@ var render = function() {
           1
         )
       ]),
+      _vm._v(" "),
+      _vm.btnact
+        ? _c(
+            "v-btn",
+            {
+              staticClass: "mx-auto mt-3",
+              attrs: {
+                disabled: _vm.btnload,
+                loading: _vm.btnload,
+                large: "",
+                color: "amber darken-3",
+                dark: !_vm.btnload
+              },
+              on: {
+                click: function($event) {
+                  return _vm.btnActualizar()
+                }
+              }
+            },
+            [_vm._v("Registrar Otra Entrada este mismo dia\n  ")]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "v-flex",
