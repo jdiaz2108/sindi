@@ -86,7 +86,7 @@
 </head>
 
 <body>
-    <v-app>
+ 
     <div id="app">
             @if(Auth::user()->status > 1)
                 <!-- In Menu Izquierda -->
@@ -129,11 +129,11 @@
         </div> --}}
         @endif
         <!-- Content -->
+        <v-app>
 
+<v-content class="my-4">
 
-<v-content>
-      <v-container fill-height>
-        <v-layout justify-center align-center>
+        <v-layout justify-center align-center column>
     
 
                     @if(Auth::user()->status > 1)
@@ -145,8 +145,9 @@
 
  
         </v-layout>
-      </v-container>
     </v-content>
+
+</v-app>
 
         <!-- /.content -->
      {{--    <div class="clearfix"></div> --}}
@@ -155,7 +156,7 @@
         <!-- Fn Footer -->
     </div>
 
-</v-app>
+
 
 
     <!-- /#right-panel -->

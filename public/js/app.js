@@ -3064,11 +3064,86 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
     return {
+      fav: true,
+      menu: false,
+      message: false,
+      hints: true,
       items: [{
         icon: 'trending_up',
         text: 'Most Popular'
@@ -60490,122 +60565,126 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-list",
-        { attrs: { dense: "" } },
-        [
-          _vm._l(_vm.items, function(item) {
-            return _c(
-              "v-list-group",
-              {
-                key: item.title,
-                attrs: { "prepend-icon": item.action, "no-action": "" },
-                scopedSlots: _vm._u([
+      _vm.user.level == 992
+        ? _c(
+            "v-list",
+            { attrs: { dense: "" } },
+            [
+              _vm._l(_vm.items, function(item) {
+                return _c(
+                  "v-list-group",
                   {
-                    key: "activator",
-                    fn: function() {
-                      return [
-                        _c(
-                          "v-list-tile",
-                          [
-                            _c("v-list-tile-title", [
-                              _vm._v(_vm._s(item.title))
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    },
-                    proxy: true
-                  }
-                ]),
-                model: {
-                  value: item.active,
-                  callback: function($$v) {
-                    _vm.$set(item, "active", $$v)
+                    key: item.title,
+                    attrs: { "prepend-icon": item.action, "no-action": "" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "activator",
+                        fn: function() {
+                          return [
+                            _c(
+                              "v-list-tile",
+                              [
+                                _c("v-list-tile-title", [
+                                  _vm._v(_vm._s(item.title))
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        },
+                        proxy: true
+                      }
+                    ]),
+                    model: {
+                      value: item.active,
+                      callback: function($$v) {
+                        _vm.$set(item, "active", $$v)
+                      },
+                      expression: "item.active"
+                    }
                   },
-                  expression: "item.active"
-                }
-              },
-              [
-                _vm._v(" "),
-                _vm._l(item.items, function(subItem) {
-                  return _c(
-                    "v-list-tile",
-                    {
-                      key: subItem.title,
-                      attrs: { href: subItem.action },
-                      on: { click: function($event) {} }
-                    },
-                    [
-                      _c("v-list-tile-title", [_vm._v(_vm._s(subItem.title))]),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-tile-action",
+                  [
+                    _vm._v(" "),
+                    _vm._l(item.items, function(subItem) {
+                      return _c(
+                        "v-list-tile",
+                        {
+                          key: subItem.title,
+                          attrs: { href: subItem.action },
+                          on: { click: function($event) {} }
+                        },
                         [
-                          _c("v-icon", { attrs: { light: "" } }, [
-                            _vm._v(_vm._s(item.action))
-                          ])
+                          _c("v-list-tile-title", [
+                            _vm._v(_vm._s(subItem.title))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-tile-action",
+                            [
+                              _c("v-icon", { attrs: { light: "" } }, [
+                                _vm._v(_vm._s(item.action))
+                              ])
+                            ],
+                            1
+                          )
                         ],
                         1
                       )
+                    })
+                  ],
+                  2
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "v-list-tile",
+                { staticClass: "mt-3", on: { click: function($event) {} } },
+                [
+                  _c(
+                    "v-list-tile-action",
+                    [
+                      _c("v-icon", { attrs: { color: "grey darken-1" } }, [
+                        _vm._v("add_circle_outline")
+                      ])
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile-title",
+                    { staticClass: "grey--text text--darken-1" },
+                    [_vm._v("Browse Channels")]
                   )
-                })
-              ],
-              2
-            )
-          }),
-          _vm._v(" "),
-          _c(
-            "v-list-tile",
-            { staticClass: "mt-3", on: { click: function($event) {} } },
-            [
-              _c(
-                "v-list-tile-action",
-                [
-                  _c("v-icon", { attrs: { color: "grey darken-1" } }, [
-                    _vm._v("add_circle_outline")
-                  ])
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
-                "v-list-tile-title",
-                { staticClass: "grey--text text--darken-1" },
-                [_vm._v("Browse Channels")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-tile",
-            { on: { click: function($event) {} } },
-            [
-              _c(
-                "v-list-tile-action",
+                "v-list-tile",
+                { on: { click: function($event) {} } },
                 [
-                  _c("v-icon", { attrs: { color: "grey darken-1" } }, [
-                    _vm._v("settings")
-                  ])
+                  _c(
+                    "v-list-tile-action",
+                    [
+                      _c("v-icon", { attrs: { color: "grey darken-1" } }, [
+                        _vm._v("settings")
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile-title",
+                    { staticClass: "grey--text text--darken-1" },
+                    [_vm._v("Manage Subscriptions")]
+                  )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list-tile-title",
-                { staticClass: "grey--text text--darken-1" },
-                [_vm._v("Manage Subscriptions")]
               )
             ],
-            1
+            2
           )
-        ],
-        2
-      )
+        : _vm._e()
     ],
     1
   )
@@ -60659,34 +60738,149 @@ var render = function() {
       _vm._v(" "),
       _c("v-spacer"),
       _vm._v(" "),
-      _c("v-btn", { attrs: { icon: "" } }, [_c("v-icon", [_vm._v("apps")])], 1),
-      _vm._v(" "),
       _c(
-        "v-btn",
-        { attrs: { icon: "" } },
-        [_c("v-icon", [_vm._v("notifications")])],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        { attrs: { icon: "", large: "" } },
+        "v-menu",
+        {
+          attrs: {
+            "close-on-content-click": false,
+            "nudge-width": 200,
+            "offset-y": ""
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g({ attrs: { icon: "", large: "" } }, on),
+                    [
+                      _c("v-avatar", { attrs: { size: "40px" } }, [
+                        _vm.user.employee.user_picture_url
+                          ? _c("img", {
+                              attrs: {
+                                src:
+                                  "/storage/EmployeeImages/tumb." +
+                                  _vm.user.employee.user_picture_url,
+                                alt: "Vuetify"
+                              }
+                            })
+                          : _c("img", {
+                              staticClass: "blue-gradient p-1",
+                              attrs: {
+                                src: "/images/avatar.png",
+                                alt: "Vuetify"
+                              }
+                            })
+                      ])
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.menu,
+            callback: function($$v) {
+              _vm.menu = $$v
+            },
+            expression: "menu"
+          }
+        },
         [
-          _c("v-avatar", { attrs: { size: "40px" } }, [
-            _vm.user.employee.user_picture_url
-              ? _c("img", {
-                  attrs: {
-                    src:
-                      "/storage/EmployeeImages/tumb." +
-                      _vm.user.employee.user_picture_url,
-                    alt: "Vuetify"
-                  }
-                })
-              : _c("img", {
-                  staticClass: "blue-gradient p-1",
-                  attrs: { src: "/images/avatar.png", alt: "Vuetify" }
-                })
-          ])
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-list",
+                [
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c("v-list-tile-avatar", [
+                        _vm.user.employee.user_picture_url
+                          ? _c("img", {
+                              attrs: {
+                                src:
+                                  "/storage/EmployeeImages/tumb." +
+                                  _vm.user.employee.user_picture_url,
+                                alt: "Vuetify"
+                              }
+                            })
+                          : _c("img", {
+                              staticClass: "blue-gradient p-1",
+                              attrs: {
+                                src: "/images/avatar.png",
+                                alt: "Vuetify"
+                              }
+                            })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [
+                            _vm._v(
+                              _vm._s(_vm.user.name) +
+                                " " +
+                                _vm._s(_vm.user.last_name)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(_vm._s(_vm.user.email))
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "nav-link text-danger",
+                      attrs: {
+                        onclick:
+                          "event.preventDefault();\n                                                     document.getElementById('logout-form').submit();"
+                      }
+                    },
+                    [_vm._v("Cerrar Sesión")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.menu = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancelar")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )
