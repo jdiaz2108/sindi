@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::resource('/map', 'MapGeoController');
 
-	Route::resource('/', 'IndexController');
+	Route::resource('/', 'MapGeoController');
 
 	//In - Ruta CRUD relacionada con Empleados
 	Route::resource('/Em', 'EmployeeControler');

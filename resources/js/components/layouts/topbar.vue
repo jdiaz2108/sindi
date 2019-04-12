@@ -36,13 +36,12 @@
       <template v-slot:activator="{ on }">
         <v-btn icon large v-on="on">
         <v-avatar size="40px">
-          <img v-if="user.employee.user_picture_url"
+          <!-- <img v-if="user.employee.user_picture_url"
             :src="'/storage/EmployeeImages/tumb.'+user.employee.user_picture_url"
             alt="Vuetify"
-          >
+          > -->
 
           <img
-          v-else
             src="/images/avatar.png"
             alt="Vuetify"
             class="blue-gradient p-1"
@@ -55,13 +54,13 @@
         <v-list>
           <v-list-tile avatar>
             <v-list-tile-avatar>
-              <img v-if="user.employee.user_picture_url"
+              <!-- <img v-if="user.employee.user_picture_url"
             :src="'/storage/EmployeeImages/tumb.'+user.employee.user_picture_url"
             alt="Vuetify"
-          >
+          > -->
 
           <img
-          v-else
+
             src="/images/avatar.png"
             alt="Vuetify"
             class="blue-gradient p-1"
@@ -183,3 +182,4 @@
     }),
     }
 </script>
+

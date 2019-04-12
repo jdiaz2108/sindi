@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Sindi PMK</title>
+    <title>PMK</title>
     <!-- Scripts -->
     
 

@@ -3134,7 +3134,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
@@ -60757,22 +60756,10 @@ var render = function() {
                     _vm._g({ attrs: { icon: "", large: "" } }, on),
                     [
                       _c("v-avatar", { attrs: { size: "40px" } }, [
-                        _vm.user.employee.user_picture_url
-                          ? _c("img", {
-                              attrs: {
-                                src:
-                                  "/storage/EmployeeImages/tumb." +
-                                  _vm.user.employee.user_picture_url,
-                                alt: "Vuetify"
-                              }
-                            })
-                          : _c("img", {
-                              staticClass: "blue-gradient p-1",
-                              attrs: {
-                                src: "/images/avatar.png",
-                                alt: "Vuetify"
-                              }
-                            })
+                        _c("img", {
+                          staticClass: "blue-gradient p-1",
+                          attrs: { src: "/images/avatar.png", alt: "Vuetify" }
+                        })
                       ])
                     ],
                     1
@@ -60802,22 +60789,10 @@ var render = function() {
                     { attrs: { avatar: "" } },
                     [
                       _c("v-list-tile-avatar", [
-                        _vm.user.employee.user_picture_url
-                          ? _c("img", {
-                              attrs: {
-                                src:
-                                  "/storage/EmployeeImages/tumb." +
-                                  _vm.user.employee.user_picture_url,
-                                alt: "Vuetify"
-                              }
-                            })
-                          : _c("img", {
-                              staticClass: "blue-gradient p-1",
-                              attrs: {
-                                src: "/images/avatar.png",
-                                alt: "Vuetify"
-                              }
-                            })
+                        _c("img", {
+                          staticClass: "blue-gradient p-1",
+                          attrs: { src: "/images/avatar.png", alt: "Vuetify" }
+                        })
                       ]),
                       _vm._v(" "),
                       _c(
