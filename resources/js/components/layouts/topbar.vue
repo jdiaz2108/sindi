@@ -40,7 +40,6 @@
             :src="'/storage/EmployeeImages/tumb.'+user.employee.user_picture_url"
             alt="Vuetify"
           > -->
-
           <img
             src="/images/avatar.png"
             alt="Vuetify"
