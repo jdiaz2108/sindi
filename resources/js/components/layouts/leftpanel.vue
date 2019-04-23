@@ -20,7 +20,6 @@
 
         </v-list>
 
-
         <v-list dense v-if="user.level == 992">
             <v-list-group
             v-for="item in items"

@@ -126,4 +126,11 @@ if($request->ajax()){
     {
         //
     }
+
+    public function getReport()
+    {
+        $allGeo = MapGeo::with('user')->get();
+        // return Auth::user();
+        return view('mapgeo.show', compact('allGeo'));
+    }
 }

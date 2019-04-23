@@ -89,6 +89,8 @@ Route::group(['middleware' => ['auth']], function () {
 		return view('bg');
 	});
 
+	Route::get('/getReport', 'MapGeoController@getReport');
+
 });
 //Fn - Rutan con el Middleware para la Autenticacion
 
