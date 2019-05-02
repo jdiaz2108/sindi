@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MapGeo;
+use App\User;
 use Auth;
 
 class MapGeoController extends Controller
@@ -13,10 +14,16 @@ class MapGeoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $getAll = MapGeo::with('user')->get();
+        if($request->ajax()){
+            return response()->json( $getAll , 200);
+        } else {
+            return view('mapgeo.mapgeo');
+        }
+
         // return Auth::user();
-        return view('mapgeo.mapgeo');
     }
 
     /**
@@ -104,6 +111,16 @@ if($request->ajax()){
         //
     }
 
+    public function mapTest(Request $request, $slug)
+    {
+        return User::whereSlug($slug)->with('location')->first();
+    }
+
+    public function mapUsers(Request $request)
+    {
+        return User::with('location')->has('location')->where('id', '>' ,1)->get();
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -133,4 +150,10 @@ if($request->ajax()){
         // return Auth::user();
         return view('mapgeo.show', compact('allGeo'));
     }
+
+    public function mapAdmin()
+    {
+            return view('mapgeo.mapAdmin');
+    }
+
 }

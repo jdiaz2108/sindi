@@ -18,10 +18,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $employees = Employee::with('user', 'position', 'city')->where('id', '>' ,1)->get();
-        return view('admin.user.listar', compact('employees'));
+
+        if($request->ajax()){
+            return response()->json( $employees , 200);
+        } else {
+            return view('admin.user.listar', compact('employees'));
+        }
+
     }
 
     /**
@@ -80,11 +86,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
 
         $usuario = User::whereSlug($id)->firstOrFail();
-        return view('index.user', compact('usuario'));
+        if($request->ajax()){
+            return response()->json( $usuario , 200);
+        } else {
+            return view('index.user', compact('usuario'));
+        }
+
     }
 
     /**

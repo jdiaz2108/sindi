@@ -34,6 +34,7 @@ Vue.component('personal-edit-user', require('./components/personalEditUser.vue')
 Vue.component('perfil-edit-user', require('./components/perfilEditUser.vue').default);
 
 Vue.component('geo-map', require('./components/geolocalizador/Map.vue').default);
+Vue.component('geo-map-admin', require('./components/geolocalizador/MapAdmin.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -78,6 +78,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::group(['middleware' => ['admin']], function () {
 
+		Route::get('/mapTest/{slug}', 'MapGeoController@mapTest');
+	 Route::get('/mapUsers', 'MapGeoController@mapUsers');
+
+	 Route::get('/mapAdmin', 'MapGeoController@mapAdmin');
+
 		//In - Ruta CRUD relacionada con Usuarios
 		Route::resource('/U', 'UserController');
 		//Fn - Ruta CRUD relacionada con Usuarios

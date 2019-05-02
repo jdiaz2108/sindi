@@ -55,4 +55,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Registerpys');
     }
 
+    public function location()
+    {
+        return $this->hasMany('App\Models\MapGeo');
+    }
+
 }

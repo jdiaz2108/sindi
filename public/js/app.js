@@ -2812,6 +2812,336 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
+/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
+  load: {
+    key: 'AIzaSyCoJPXuQpiIBxK6gq3OSF_OrSqgEPAUkI4',
+    libraries: "places" // necessary for places input
+
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "GoogleMap",
+  data: function data() {
+    return {
+      startDate: new Date().toISOString().substr(0, 10),
+      endDate: new Date().toISOString().substr(0, 10),
+      menuStartDate: false,
+      menuEndDate: false,
+      rows: [20, 30, 50, {
+        "text": "$vuetify.dataIterator.rowsPerPageAll",
+        "value": -1
+      }],
+      search: '',
+      headers: [{
+        text: 'Nombre',
+        align: 'left',
+        value: 'user.name'
+      }, {
+        text: 'Apellido',
+        value: 'user.last_name'
+      }, {
+        text: 'Email',
+        value: 'email_corporate'
+      }, {
+        text: 'Registros',
+        value: 'location.length'
+      }],
+      selected: [],
+      users: [],
+      opened: false,
+      // default to Montreal to keep it simple
+      // change this to whatever makes sense
+      center: {},
+      position: {
+        position: null
+      },
+      infoWindow: {
+        position: {
+          lat: 0,
+          lng: 0
+        },
+        open: false,
+        template: ''
+      },
+      markers: [],
+      btnstart: null,
+      btnend: null,
+      btnact: false,
+      btnload: false
+    };
+  },
+  created: function created() {
+    this.getMapGeo();
+    this.getUsers();
+  },
+  mounted: function mounted() {
+    this.geolocate();
+  },
+  methods: {
+    getUser: function getUser() {
+      this.markers = [];
+
+      for (var x = 0; x < this.selected.length; x++) {
+        var obj = this.selected[x];
+
+        for (var index = 0; index < obj.location.length; index++) {
+          var el = obj.location[index];
+          this.markers.push({
+            name: obj.name,
+            lastName: obj.last_name,
+            document: obj.document,
+            user: obj.id,
+            date: el.created_at,
+            window: true,
+            status: el.status,
+            position: {
+              lat: parseFloat(el.latitude),
+              lng: parseFloat(el.longitude)
+            }
+          });
+        }
+      }
+    },
+    getUsers: function getUsers() {
+      var _this = this;
+
+      this.markers = [];
+      axios.get('/mapUsers').then(function (response) {
+        _this.users = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    // receives a place object via the autocomplete component
+    geolocate: function geolocate() {
+      var _this2 = this;
+
+      navigator.geolocation.getCurrentPosition(function (position) {
+        _this2.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          status: 1
+        };
+        _this2.position.position = _this2.center; // this.markers = [this.position,];
+      });
+    },
+    MapStart: function MapStart() {
+      var _this3 = this;
+
+      axios.post('/map', this.center).then(function (response) {
+        _this3.getMapGeo();
+
+        if (_this3.center.status == 1) {
+          _this3.Swal('Se ha guardado tu hora de Llegada.');
+        } else if (_this3.center.status == 2) {
+          _this3.Swal('Se ha guardado tu hora de Salida.');
+        }
+
+        console.log(response);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    btnActualizar: function btnActualizar() {
+      var _this4 = this;
+
+      this.btnload = true;
+      this.btnstart = {
+        disabled: false,
+        dark: true
+      };
+      setTimeout(function () {
+        return _this4.btnload = false, _this4.btnact = false;
+      }, 2000);
+      this.Swal('Puedes Registrar otra entrada el dia de Hoy');
+    },
+    getMapGeo: function getMapGeo() {
+      var _this5 = this;
+
+      axios.get('/map/show').then(function (response) {
+        if (response.data != 'null' && response.data != 'cierre') {
+          _this5.btnstart = {
+            disabled: true,
+            dark: false
+          };
+          _this5.btnend = {
+            disabled: false,
+            dark: true
+          };
+          _this5.center.status = 2;
+        } else if (response.data == 'null') {
+          _this5.btnstart = {
+            disabled: false,
+            dark: true
+          };
+          _this5.btnend = {
+            disabled: true,
+            dark: false
+          };
+        } else if (response.data == 'cierre') {
+          _this5.btnstart = {
+            disabled: true,
+            dark: false
+          };
+          _this5.btnend = {
+            disabled: true,
+            dark: false
+          };
+          _this5.btnact = true;
+          _this5.center.status = 1;
+        }
+
+        ;
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    Swal: function Swal(texto) {
+      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default()({
+        type: 'success',
+        title: texto,
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layouts/leftpanel.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layouts/leftpanel.vue?vue&type=script&lang=js& ***!
@@ -2823,7 +3153,6 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
 /* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_0__);
-//
 //
 //
 //
@@ -2931,6 +3260,9 @@ __webpack_require__.r(__webpack_exports__);
         items: [{
           title: 'Geolocalizador',
           action: '/map'
+        }, {
+          title: 'Mapa Admin',
+          action: '/mapAdmin'
         }]
       }, {
         action: 'alarm_add',
@@ -8800,6 +9132,25 @@ exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-b
 
 // module
 exports.push([module.i, "\n.vue-street-view-pano-container {\n  position: relative;\n}\n.vue-street-view-pano-container .vue-street-view-pano {\n  left: 0; right: 0; top: 0; bottom: 0;\n  position: absolute;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.poi-info-window div, .poi-info-window a {\n    color: #000000 !important;\n}\n.gm-style .gm-style-iw-c {\n    bottom: 0;\n    top: 2rem;\n    position: relative;\n    overflow: initial;\n    padding: 5px 0.5rem;\n}\n.gm-style .gm-style-iw-t::after {\n    box-shadow: 0 2px 7px 1px rgba(0,0,0,0.3);\n    height: 13px;\n    width: 13px;\n    top: 35%;\n    z-index: -1;\n}\n.ctn-data-maps {\n    align-items: center;\n    color: #000000;\n    display: flex;\n    font-size: 15px;\n    justify-content: space-between;\n    line-height: 25px;\n}\n.ctn-data-maps span:last-child {\n    font-size: 13px;\n    font-weight: 500;\n    text-transform: capitalize;\n}\n.gm-ui-hover-effect {\n    background-color: #ffffff !important;\n    right: -1.25rem !important;\n    left: initial !important;\n    bottom: 0 !important;\n    top: -20px !important;\n    border-radius: 50% 50% 50% 0%;\n    width: 25px !important;\n    height: 25px !important;\n    box-shadow: 0 0 2px #000000;\n    display: flex !important;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column;\n    opacity: 0.7;\n}\n.f-1,\n.f-2 {\n    position: relative;\n}\n.f-1:before {\n    background-color: #51e451;\n}\n.f-2:before {\n    background-color: #ea4335;\n}\n.f-1:before,\n.f-2:before {\n    content: '';\n    position: absolute;\n    top: 90%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    border-radius: 50%;\n}\n\n", ""]);
 
 // exports
 
@@ -54942,6 +55293,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./MapAdmin.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/permisos/Permisos.vue?vue&type=style&index=0&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/permisos/Permisos.vue?vue&type=style&index=0&lang=css& ***!
@@ -60475,6 +60856,452 @@ var render = function() {
             }),
             1
           )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=template&id=440fd996&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=template&id=440fd996& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { row: "", wrap: "" } },
+    [
+      _c(
+        "v-flex",
+        { attrs: { xs12: "", sm12: "", "text-xs-center": "", "mb-5": "" } },
+        [
+          _c(
+            "gmap-map",
+            {
+              staticStyle: { width: "100%", height: "500px" },
+              attrs: { center: _vm.center, zoom: 16 }
+            },
+            [
+              _vm._l(_vm.markers, function(m, index) {
+                return _c("gmap-marker", {
+                  key: index + "-marker",
+                  attrs: {
+                    labelClass: "gmap-marker",
+                    title: m.title,
+                    clickable: true,
+                    position: m.position
+                  },
+                  on: {
+                    click: function($event) {
+                      m.window = true
+                    }
+                  }
+                })
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.markers, function(m, index) {
+                return _c(
+                  "gmap-info-window",
+                  {
+                    key: index + "-window",
+                    attrs: {
+                      options: { maxWidth: 300 },
+                      position: m.position,
+                      opened: m.window
+                    },
+                    on: {
+                      closeclick: function($event) {
+                        m.window = false
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "ctn-data-maps" }, [
+                      _c("span", [_vm._v("Nombre:")]),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(_vm._s(m.name) + " " + _vm._s(m.lastName))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ctn-data-maps" }, [
+                      _c("span", [_vm._v("Documento:")]),
+                      _vm._v(" "),
+                      _c("span", [_vm._v(_vm._s(m.document))])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "ctn-data-maps",
+                        class: { "f-1": m.status == 1, "f-2": m.status == 2 }
+                      },
+                      [
+                        _c("span", [_vm._v("Estado:")]),
+                        _vm._v(" "),
+                        _c("span", [
+                          _vm._v(_vm._s(m.status == 1 ? "Entrada" : "Salida"))
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              })
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-flex",
+        { attrs: { xs12: "", sm6: "", md6: "" } },
+        [
+          _c(
+            "v-menu",
+            {
+              ref: "menuStartDate",
+              attrs: {
+                "close-on-content-click": false,
+                "nudge-right": 40,
+                "return-value": _vm.startDate,
+                lazy: "",
+                transition: "scale-transition",
+                "offset-y": "",
+                "full-width": "",
+                "min-width": "290px"
+              },
+              on: {
+                "update:returnValue": function($event) {
+                  _vm.startDate = $event
+                },
+                "update:return-value": function($event) {
+                  _vm.startDate = $event
+                }
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "activator",
+                  fn: function(ref) {
+                    var on = ref.on
+                    return [
+                      _c(
+                        "v-text-field",
+                        _vm._g(
+                          {
+                            attrs: {
+                              label: "Selecciona la fecha de inicio",
+                              "prepend-icon": "event",
+                              readonly: ""
+                            },
+                            model: {
+                              value: _vm.startDate,
+                              callback: function($$v) {
+                                _vm.startDate = $$v
+                              },
+                              expression: "startDate"
+                            }
+                          },
+                          on
+                        )
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.menuStartDate,
+                callback: function($$v) {
+                  _vm.menuStartDate = $$v
+                },
+                expression: "menuStartDate"
+              }
+            },
+            [
+              _vm._v(" "),
+              _c(
+                "v-date-picker",
+                {
+                  attrs: { "no-title": "", scrollable: "" },
+                  model: {
+                    value: _vm.startDate,
+                    callback: function($$v) {
+                      _vm.startDate = $$v
+                    },
+                    expression: "startDate"
+                  }
+                },
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "", color: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.menuStartDate = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "", color: "primary" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$refs.menuStartDate.save(_vm.startDate)
+                        }
+                      }
+                    },
+                    [_vm._v("OK")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-flex",
+        { attrs: { xs12: "", sm6: "", md6: "" } },
+        [
+          _c(
+            "v-menu",
+            {
+              ref: "menuEndDate",
+              attrs: {
+                "close-on-content-click": true,
+                "nudge-right": 40,
+                "return-value": _vm.endDate,
+                lazy: "",
+                transition: "scale-transition",
+                "offset-y": "",
+                "full-width": "",
+                "min-width": "290px",
+                min: _vm.endDate
+              },
+              on: {
+                "update:returnValue": function($event) {
+                  _vm.endDate = $event
+                },
+                "update:return-value": function($event) {
+                  _vm.endDate = $event
+                }
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "activator",
+                  fn: function(ref) {
+                    var on = ref.on
+                    return [
+                      _c(
+                        "v-text-field",
+                        _vm._g(
+                          {
+                            attrs: {
+                              label: "Selecciona la fecha final",
+                              "prepend-icon": "event",
+                              readonly: ""
+                            },
+                            model: {
+                              value: _vm.endDate,
+                              callback: function($$v) {
+                                _vm.endDate = $$v
+                              },
+                              expression: "endDate"
+                            }
+                          },
+                          on
+                        )
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.menuEndDate,
+                callback: function($$v) {
+                  _vm.menuEndDate = $$v
+                },
+                expression: "menuEndDate"
+              }
+            },
+            [
+              _vm._v(" "),
+              _c(
+                "v-date-picker",
+                {
+                  attrs: { "no-title": "", scrollable: "" },
+                  model: {
+                    value: _vm.endDate,
+                    callback: function($$v) {
+                      _vm.endDate = $$v
+                    },
+                    expression: "endDate"
+                  }
+                },
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "", color: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.menuEndDate = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "", color: "primary" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$refs.menuEndDate.save(_vm.endDate)
+                        }
+                      }
+                    },
+                    [_vm._v("OK")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "w-100" },
+        [
+          _c(
+            "v-card-title",
+            [
+              _vm._v("\n            Seleccionar Usuarios\n            "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "search",
+                  label: "Buscar",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "elevation-1",
+            attrs: {
+              "rows-per-page-items": _vm.rows,
+              headers: _vm.headers,
+              items: _vm.users,
+              search: _vm.search,
+              "item-key": "name",
+              "select-all": ""
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "items",
+                fn: function(props) {
+                  return [
+                    _c(
+                      "td",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.getUser()
+                          }
+                        }
+                      },
+                      [
+                        _c("v-checkbox", {
+                          attrs: { primary: "", "hide-details": "" },
+                          model: {
+                            value: props.selected,
+                            callback: function($$v) {
+                              _vm.$set(props, "selected", $$v)
+                            },
+                            expression: "props.selected"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-left" }, [
+                      _vm._v(_vm._s(props.item.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-left" }, [
+                      _vm._v(_vm._s(props.item.last_name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-left" }, [
+                      _vm._v(_vm._s(props.item.email))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-center" }, [
+                      _vm._v(_vm._s(props.item.location.length))
+                    ])
+                  ]
+                }
+              }
+            ]),
+            model: {
+              value: _vm.selected,
+              callback: function($$v) {
+                _vm.selected = $$v
+              },
+              expression: "selected"
+            }
+          }),
+          _vm._v(" "),
+          _c("pre", [_vm._v(_vm._s(_vm.$data.selected))])
         ],
         1
       )
@@ -104308,6 +105135,7 @@ Vue.component('create-user', __webpack_require__(/*! ./components/CreateUser.vue
 Vue.component('personal-edit-user', __webpack_require__(/*! ./components/personalEditUser.vue */ "./resources/js/components/personalEditUser.vue").default);
 Vue.component('perfil-edit-user', __webpack_require__(/*! ./components/perfilEditUser.vue */ "./resources/js/components/perfilEditUser.vue").default);
 Vue.component('geo-map', __webpack_require__(/*! ./components/geolocalizador/Map.vue */ "./resources/js/components/geolocalizador/Map.vue").default);
+Vue.component('geo-map-admin', __webpack_require__(/*! ./components/geolocalizador/MapAdmin.vue */ "./resources/js/components/geolocalizador/MapAdmin.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -104726,6 +105554,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Map_vue_vue_type_template_id_749e59e9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Map_vue_vue_type_template_id_749e59e9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/geolocalizador/MapAdmin.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/geolocalizador/MapAdmin.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MapAdmin_vue_vue_type_template_id_440fd996___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MapAdmin.vue?vue&type=template&id=440fd996& */ "./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=template&id=440fd996&");
+/* harmony import */ var _MapAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MapAdmin.vue?vue&type=script&lang=js& */ "./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _MapAdmin_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MapAdmin.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _MapAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MapAdmin_vue_vue_type_template_id_440fd996___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MapAdmin_vue_vue_type_template_id_440fd996___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/geolocalizador/MapAdmin.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./MapAdmin.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./MapAdmin.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=template&id=440fd996&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=template&id=440fd996& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_template_id_440fd996___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./MapAdmin.vue?vue&type=template&id=440fd996& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/geolocalizador/MapAdmin.vue?vue&type=template&id=440fd996&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_template_id_440fd996___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapAdmin_vue_vue_type_template_id_440fd996___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

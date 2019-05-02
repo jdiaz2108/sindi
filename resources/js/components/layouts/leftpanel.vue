@@ -106,7 +106,9 @@
             active: true,
             items: [
               { title: 'Geolocalizador',
-              action: '/map' }
+              action: '/map' },
+              { title: 'Mapa Admin',
+              action: '/mapAdmin' }
             ]
           },
           {
