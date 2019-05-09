@@ -46,10 +46,37 @@ const app = new Vue({
     el: '#app',
     data() {
     	return {
-    		hola: 'mi perro',
-    		drawer: true,
+				drawer: true,
+				conectedUsers: [],
+				user: null
     	}
-    }
+		},
+		mounted() {
+			
+			this.join();
+		},
+		methods: {
+			join: function() {
+				Echo.join('joinRoom')
+        .here((users) => {
+					if (this.user.level > 900) {
+						this.conectedUsers = users;
+					}
+            // console.log(users);
+        })
+        .joining((user) => {
+					if (this.user.level > 900) {
+					this.conectedUsers.push(user) }
+            // console.log(user.name);
+        })
+        .leaving((user) => {
+					if (this.user.level > 900) {
+					let i = this.conectedUsers.map(item => item.id).indexOf(user.id) // find index of your object
+					this.conectedUsers.splice(i, 1) }
+            // console.log(user.name);
+        });
+      }
+		},
 });
 
 
