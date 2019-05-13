@@ -84,7 +84,12 @@
         methods: {
             // receives a place object via the autocomplete component
             geolocate: function() {
-                navigator.geolocation.getCurrentPosition(position => {
+            navigator.geolocation.watchPosition(this.showPosition, console.log('false'), {
+                    enableHighAccuracy: true,
+                    maximumAge: 0,
+            })
+            },
+            showPosition: function(position) {
                     this.center = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
@@ -92,7 +97,6 @@
                     };
                     this.position.position = this.center;
                     this.markers = [this.position,];
-                });
             },
             MapStart: function() {
                 axios

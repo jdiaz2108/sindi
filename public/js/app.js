@@ -2715,28 +2715,30 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
   methods: {
     // receives a place object via the autocomplete component
     geolocate: function geolocate() {
-      var _this = this;
-
-      navigator.geolocation.getCurrentPosition(function (position) {
-        _this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-          status: 1
-        };
-        _this.position.position = _this.center;
-        _this.markers = [_this.position];
+      navigator.geolocation.watchPosition(this.showPosition, console.log('false'), {
+        enableHighAccuracy: true,
+        maximumAge: 0
       });
     },
+    showPosition: function showPosition(position) {
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        status: 1
+      };
+      this.position.position = this.center;
+      this.markers = [this.position];
+    },
     MapStart: function MapStart() {
-      var _this2 = this;
+      var _this = this;
 
       axios.post('/map', this.center).then(function (response) {
-        _this2.getMapGeo();
+        _this.getMapGeo();
 
-        if (_this2.center.status == 1) {
-          _this2.Swal('Se ha guardado tu hora de Llegada.');
-        } else if (_this2.center.status == 2) {
-          _this2.Swal('Se ha guardado tu hora de Salida.');
+        if (_this.center.status == 1) {
+          _this.Swal('Se ha guardado tu hora de Llegada.');
+        } else if (_this.center.status == 2) {
+          _this.Swal('Se ha guardado tu hora de Salida.');
         }
 
         console.log(response);
@@ -2745,7 +2747,7 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
       });
     },
     btnActualizar: function btnActualizar() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.btnload = true;
       this.btnstart = {
@@ -2753,44 +2755,44 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
         dark: true
       };
       setTimeout(function () {
-        return _this3.btnload = false, _this3.btnact = false;
+        return _this2.btnload = false, _this2.btnact = false;
       }, 2000);
       this.Swal('Puedes Registrar otra entrada el dia de Hoy');
     },
     getMapGeo: function getMapGeo() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.get('/map/show').then(function (response) {
         if (response.data != 'null' && response.data != 'cierre') {
-          _this4.btnstart = {
+          _this3.btnstart = {
             disabled: true,
             dark: false
           };
-          _this4.btnend = {
+          _this3.btnend = {
             disabled: false,
             dark: true
           };
-          _this4.center.status = 2;
+          _this3.center.status = 2;
         } else if (response.data == 'null') {
-          _this4.btnstart = {
+          _this3.btnstart = {
             disabled: false,
             dark: true
           };
-          _this4.btnend = {
+          _this3.btnend = {
             disabled: true,
             dark: false
           };
         } else if (response.data == 'cierre') {
-          _this4.btnstart = {
+          _this3.btnstart = {
             disabled: true,
             dark: false
           };
-          _this4.btnend = {
+          _this3.btnend = {
             disabled: true,
             dark: false
           };
-          _this4.btnact = true;
-          _this4.center.status = 1;
+          _this3.btnact = true;
+          _this3.center.status = 1;
         }
 
         ;
