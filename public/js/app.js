@@ -2717,22 +2717,11 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
     geolocate: function geolocate() {
       console.log(navigator.geolocation);
       navigator.geolocation.watchPosition(this.showPosition, console.log('false'), {
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         maximumAge: 0
       });
     },
     showPosition: function showPosition(position) {
-      var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      Toast.fire({
-        type: 'success',
-        title: 'Posición Actualizada'
-      });
       this.center = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,

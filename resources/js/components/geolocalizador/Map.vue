@@ -86,22 +86,11 @@
             geolocate: function() {
                 console.log(navigator.geolocation);
             navigator.geolocation.watchPosition(this.showPosition, console.log('false'), {
-                    enableHighAccuracy: true,
+                    enableHighAccuracy: false,
                     maximumAge: 0,
             })
             },
             showPosition: function(position) {
-                const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                        });
-
-                        Toast.fire({
-                        type: 'success',
-                        title: 'Posición Actualizada'
-                        })
 
                     this.center = {
                         lat: position.coords.latitude,
