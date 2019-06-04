@@ -27,91 +27,90 @@
 
             </gmap-map>
         </v-flex>
-                <v-flex xs12 sm6 md6>
-                    <v-menu
-                        ref="menuStartDate"
-                        v-model="menuStartDate"
-                        :close-on-content-click="false"
-                        :nudge-right="40"
-                        :return-value.sync="startDate"
-                        lazy
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        min-width="290px"
-                    >
-                        <template v-slot:activator="{ on }">
-                        <v-text-field
-                            v-model="startDate"
-                            label="Selecciona la fecha de inicio"
-                            prepend-icon="event"
-                            readonly
-                            v-on="on"
-                        ></v-text-field>
-                        </template>
-                        <v-date-picker v-model="startDate" no-title scrollable>
-                        <v-spacer></v-spacer>
-                        <v-btn flat color="primary" @click="menuStartDate = false">Cancel</v-btn>
-                        <v-btn flat color="primary" @click="$refs.menuStartDate.save(startDate)">OK</v-btn>
-                        </v-date-picker>
-                    </v-menu>
-                    </v-flex>
-    <v-flex xs12 sm6 md6>
-      <v-menu
-        ref="menuEndDate"
-        v-model="menuEndDate"
-        :close-on-content-click="true"
-        :nudge-right="40"
-        :return-value.sync="endDate"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        min-width="290px"
-        :min="endDate"
-      >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="endDate"
-            label="Selecciona la fecha final"
-            prepend-icon="event"
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="endDate" no-title scrollable>
-          <v-spacer></v-spacer>
-          <v-btn flat color="primary" @click="menuEndDate = false">Cancel</v-btn>
-          <v-btn flat color="primary" @click="$refs.menuEndDate.save(endDate)">OK</v-btn>
-        </v-date-picker>
-      </v-menu>
-    </v-flex>
+        <v-flex xs12 sm4 md4>
+            <v-menu ref="menuStartDate" v-model="menuStartDate" :close-on-content-click="true" :nudge-right="40" lazy
+                transition="scale-transition" offset-y full-width min-width="290px">
+                <template v-slot:activator="{ on }">
+                    <v-text-field v-model="startDate" label="Selecciona la fecha de inicio" prepend-icon="event"
+                        readonly v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="startDate" no-title scrollable :max="endDate">
+                </v-date-picker>
+            </v-menu>
+        </v-flex>
+        <v-flex xs12 sm4 md4>
+            <v-menu ref="menuEndDate" v-model="menuEndDate" :close-on-content-click="false" :nudge-right="40"
+                :return-value.sync="endDate" lazy transition="scale-transition" offset-y full-width min-width="290px">
+                <template v-slot:activator="{ on }">
+                    <v-text-field v-model="endDate" label="Selecciona la fecha final" prepend-icon="event" readonly
+                        v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="endDate" no-title scrollable :min="startDate" :max="todayDate">
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="menuEndDate = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.menuEndDate.save(endDate)">OK</v-btn>
+                </v-date-picker>
+            </v-menu>
+        </v-flex>
+        <v-flex xs12 sm4 md4>
+            <v-btn color="primary" dark @click="dialogFull = true">Filtrar Usuarios</v-btn>
+        </v-flex>
+
+        <v-dialog v-model="dialogFull" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <v-card>
+                <v-toolbar dark color="primary">
+                    <v-btn icon dark @click="dialogFull = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>Filtro Usuarios</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn dark flat @click="dialogFull = false">Cerrar</v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <v-card-title>
+                    Seleccionar Usuarios
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="search" label="Buscar" single-line hide-details>
+                    </v-text-field>
+                </v-card-title>
+                <v-data-table :rows-per-page-items="rows" v-model="selected" :headers="headers" :items="users"
+                    :search="search" select-all class="elevation-1">
+                    <template v-slot:items="props">
+                        <td>
+                            <v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
+                        </td>
+                        <td class="text-xs-left">{{ props.item.name }}</td>
+                        <td class="text-xs-left">{{ props.item.last_name }}</td>
+                        <td class="text-xs-left">{{ props.item.email }}</td>
+                    </template>
+                </v-data-table>
+            </v-card>
+        </v-dialog>
 
         <v-card class="w-100">
             <v-card-title>
-                Seleccionar Usuarios
+                Seleccionar
                 <v-spacer></v-spacer>
-                <v-text-field v-model="search" append-icon="search" label="Buscar" single-line hide-details>
+                <v-text-field v-model="search2" append-icon="search" label="Buscar" single-line hide-details>
                 </v-text-field>
             </v-card-title>
-            <v-data-table :rows-per-page-items="rows" v-model="selected" :headers="headers" :items="users"
-                :search="search" item-key="name" select-all class="elevation-1">
+            <v-data-table :rows-per-page-items="rows" v-model="selected2" :headers="headers2" :items="allPositions"
+                :pagination.sync="pagination2" :search="search2" item-key="id" select-all class="elevation-1">
                 <template v-slot:items="props">
-                    <td @click="getUser()">
+                    <td>
                         <v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
                     </td>
-                    <td class="text-xs-left">{{ props.item.name }}</td>
-                    <td class="text-xs-left">{{ props.item.last_name }}</td>
-                    <td class="text-xs-left">{{ props.item.email }}</td>
-                    <td class="text-xs-center">{{ props.item.location.length }}</td>
+                    <td class="text-xs-left">{{ props.item.created_at }}</td>
+                    <td class="text-xs-left">{{ props.item.user.name }} {{ props.item.user.last_name }}</td>
+                    <td class="text-xs-left">{{ props.item.status == 1 ? 'llegada' : 'Salida' }}</td>
+                    <td class="text-xs-left">{{ props.item.latitude }}</td>
+                    <td class="text-xs-left">{{ props.item.longitude }}</td>
                 </template>
             </v-data-table>
-            <pre>{{$data.selected }}</pre>
         </v-card>
 
-
     </v-layout>
-
 </template>
 
 
@@ -126,79 +125,141 @@
         }
     });
     export default {
-        name: "GoogleMap",
+        name: 'AdminMap',
         data() {
             return {
+                search2: '',
+                msg: '',
+                dialogFull: false,
+                notificationsFull: false,
+                soundFull: true,
+                widgetsFull: false,
+                todayDate: new Date().toISOString().substr(0, 10),
                 startDate: new Date().toISOString().substr(0, 10),
                 endDate: new Date().toISOString().substr(0, 10),
                 menuStartDate: false,
                 menuEndDate: false,
-                rows: [20,30,50,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
-                        search: '',
-                headers: [
-          {
-            text: 'Nombre',
-            align: 'left',
-            value: 'user.name'
-          },
-          { text: 'Apellido', value: 'user.last_name' },
-          { text: 'Email', value: 'email_corporate' },
-          { text: 'Registros', value: 'location.length' },
-        ],
-        selected: [],
-        users: [],
-                opened: false,
-                
-            // default to Montreal to keep it simple
-            // change this to whatever makes sense
+                rows: [20, 30, 50, {
+                    "text": "$vuetify.dataIterator.rowsPerPageAll",
+                    "value": -1
+                }],
+                search: '',
+                headers: [{
+                        text: 'Nombre',
+                        align: 'left',
+                        value: 'name'
+                    },
+                    {
+                        text: 'Apellido',
+                        value: 'last_name'
+                    },
+                    {
+                        text: 'Email',
+                        value: 'email'
+                    },
+                ],
+                pagination2: {
+                    sortBy: 'created_at',
+                    descending: true,
+                },
+                headers2: [{
+                        text: 'Fecha',
+                        value: 'created_at'
+                    },
+                    {
+                        text: 'Usuario',
+                        align: 'left',
+                        value: 'user.name'
+                    },
+                    {
+                        text: 'Estatus',
+                        value: 'status'
+                    },
+                    {
+                        text: 'Latitud',
+                        value: 'latitude'
+                    },
+                    {
+                        text: 'Longitud',
+                        value: 'longitude'
+                    },
+
+                ],
+                selected: [],
+                selected2: [],
+                users: [],
                 center: {},
                 position: {
                     position: null
                 },
                 infoWindow: {
-                        position: {lat: 0, lng: 0},
-                        open: false,
-                        template: ''
-                        },
+                    position: {
+                        lat: 0,
+                        lng: 0
+                    },
+                    open: false,
+                    template: ''
+                },
                 markers: [],
                 btnstart: null,
                 btnend: null,
                 btnact: false,
-                btnload: false
+                btnload: false,
+                allPositions: [],
             };
         },
         created() {
             this.getMapGeo();
+            this.getUsers2();
             this.getUsers();
         },
         mounted() {
             this.geolocate();
         },
         methods: {
-            getUser () {
+            getUser2() {
+                this.markers = [];
+                for (let x = 0; x < this.selected2.length; x++) {
+                    let obj = this.selected2[x];
+                    this.markers.push({
+                        name: obj.user.name,
+                        lastName: obj.user.last_name,
+                        document: obj.user.document,
+                        user: obj.user_id,
+                        date: obj.created_at,
+                        window: true,
+                        status: obj.status,
+                        position: {
+                            lat: parseFloat(obj.latitude),
+                            lng: parseFloat(obj.longitude)
+                        }
+                    })
+                }
+            },
+            getUser() {
                 this.markers = [];
                 for (let x = 0; x < this.selected.length; x++) {
                     let obj = this.selected[x];
                     for (let index = 0; index < obj.location.length; index++) {
                         let el = obj.location[index];
                         this.markers.push({
-                                name: obj.name,
-                                lastName: obj.last_name,
-                                document: obj.document,
-                                user: obj.id,
-                                date: el.created_at,
-                                window: true,
-                                status: el.status,
-                                position: {
+                            name: obj.name,
+                            lastName: obj.last_name,
+                            document: obj.document,
+                            user: obj.id,
+                            date: el.created_at,
+                            window: true,
+                            status: el.status,
+                            position: {
                                 lat: parseFloat(el.latitude),
                                 lng: parseFloat(el.longitude)
-                                }
-                            })         
+                            }
+                        })
                     }
-                    
+
                 }
             },
-            getUsers () {
+            getUsers() {
                 this.markers = [];
                 axios
                     .get('/mapUsers')
@@ -206,11 +267,23 @@
                         this.users = response.data
                     })
                     .catch(function (error) {
-                    console.log(error)
+                        console.log(error)
+                    });
+            },
+            getUsers2() {
+                this.markers = [];
+                this.allPositions = [];
+                axios
+                    .get('/mapUsers/' + this.startDate + '/' + this.endDate)
+                    .then(response => {
+                        this.allPositions = response.data
+                    })
+                    .catch(function (error) {
+                        console.log(error)
                     });
             },
             // receives a place object via the autocomplete component
-            geolocate: function() {
+            geolocate: function () {
                 navigator.geolocation.getCurrentPosition(position => {
                     this.center = {
                         lat: position.coords.latitude,
@@ -221,23 +294,23 @@
                     // this.markers = [this.position,];
                 });
             },
-            MapStart: function() {
+            MapStart: function () {
                 axios
                     .post('/map', this.center)
                     .then(response => {
                         this.getMapGeo();
-                        if (this.center.status == 1) { 
+                        if (this.center.status == 1) {
                             this.Swal('Se ha guardado tu hora de Llegada.');
                         } else if (this.center.status == 2) {
                             this.Swal('Se ha guardado tu hora de Salida.');
                         }
-                    console.log(response)
+                        console.log(response)
                     })
                     .catch(function (error) {
-                    console.log(error)
+                        console.log(error)
                     });
             },
-            btnActualizar: function() {
+            btnActualizar: function () {
                 this.btnload = true;
                 this.btnstart = {
                     disabled: false,
@@ -247,7 +320,7 @@
                     this.btnact = false), 2000);
                 this.Swal('Puedes Registrar otra entrada el dia de Hoy');
             },
-            getMapGeo: function() {
+            getMapGeo: function () {
 
                 axios.get('/map/show')
                     .then(response => {
@@ -261,7 +334,7 @@
                                 dark: true
                             };
                             this.center.status = 2;
-                        } else if(response.data == 'null') {
+                        } else if (response.data == 'null') {
                             this.btnstart = {
                                 disabled: false,
                                 dark: true
@@ -269,8 +342,8 @@
                             this.btnend = {
                                 disabled: true,
                                 dark: false
-                            }; 
-                        } else if(response.data == 'cierre') {
+                            };
+                        } else if (response.data == 'cierre') {
                             this.btnstart = {
                                 disabled: true,
                                 dark: false
@@ -288,15 +361,30 @@
                         console.log(error);
                     })
             },
-            Swal: function(texto) {
+            Swal: function (texto) {
                 Swal({
-                          type: 'success',
-                          title: texto,
-                          showConfirmButton: false,
-                          timer: 2000
-                        })
+                    type: 'success',
+                    title: texto,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
             }
-        }
+        },
+        watch: {
+            selected2: function () {
+                this.getUser2()
+            },
+            startDate: function () {
+                this.getUsers2()
+            },
+            endDate: function () {
+                this.getUsers2()
+            },
+            selected() {
+                console.log(this.selected)
+            }
+
+        },
     };
 </script>
 

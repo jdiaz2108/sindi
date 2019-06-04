@@ -71,33 +71,25 @@ class MapGeoController extends Controller
     public function show(Request $request, $id)
     {
 
+            if($request->ajax()){
+                    $hoy = getdate();
+                    $hoy['mday'];
+                    $user = Auth::user();
+                    $mapgeo = MapGeo::whereUser_id($user->id)->get()->last();
+                    if ($mapgeo) {
+                    if ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] AND $mapgeo->status == 1) {
+                        return response()->json( $mapgeo , 200);
+                        } elseif ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] AND $mapgeo->status == 2) {
+                        return response()->json( 'cierre' , 200);
+                        } else {
+                        return response()->json( 'null' , 200);
+                        }
+                    }
 
+                    return response()->json( 'null' , 200);
 
+            } else { return redirect('/'); }
 
-
-if($request->ajax()){
-        $hoy = getdate();
-        $hoy['mday'];
-        $user = Auth::user();
-        $mapgeo = MapGeo::whereUser_id($user->id)->get()->last();
-        if ($mapgeo) {
-           if ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] AND $mapgeo->status == 1) {
-               return response()->json( $mapgeo , 200);
-            } elseif ($mapgeo->year == $hoy['year'] AND $mapgeo->month == $hoy['mon'] AND $mapgeo->day == $hoy['mday'] AND $mapgeo->status == 2) {
-               return response()->json( 'cierre' , 200);
-            } else {
-               return response()->json( 'null' , 200);
-            }
-        }
-
-        return response()->json( 'null' , 200);
-
-} else { return redirect('/'); }
-
-
-
-
-        
     }
 
     /**
@@ -116,8 +108,29 @@ if($request->ajax()){
         return User::whereSlug($slug)->with('location')->first();
     }
 
-    public function mapUsers(Request $request)
+    public function getUsersWLocation() {
+        return User::where('id', '>' ,1)->has('location')->get();
+    }
+
+    public function mapUsers(Request $request, $start, $end)
     {
+
+        
+                $this->start = $start.' 00:00:00';
+                $this->end = $end.' 23:59:00';
+        $locations = MapGeo::with('user')->get()->filter(function ($value) {
+            return $value->created_at > $this->start &&  $value->created_at < $this->end;
+        })->values();
+        return $locations;
+
+
+        return MapGeo::all();
+
+        $filtered = $collection->filter(function ($value, $key) {
+            return $value > 2;
+        });
+        
+
         return User::with('location')->has('location')->where('id', '>' ,1)->get();
     }
 

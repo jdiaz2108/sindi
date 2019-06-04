@@ -2943,7 +2943,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
@@ -2954,9 +2953,16 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GoogleMap",
+  name: 'AdminMap',
   data: function data() {
     return {
+      search2: '',
+      msg: '',
+      dialogFull: false,
+      notificationsFull: false,
+      soundFull: true,
+      widgetsFull: false,
+      todayDate: new Date().toISOString().substr(0, 10),
       startDate: new Date().toISOString().substr(0, 10),
       endDate: new Date().toISOString().substr(0, 10),
       menuStartDate: false,
@@ -2969,22 +2975,38 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
       headers: [{
         text: 'Nombre',
         align: 'left',
-        value: 'user.name'
+        value: 'name'
       }, {
         text: 'Apellido',
-        value: 'user.last_name'
+        value: 'last_name'
       }, {
         text: 'Email',
-        value: 'email_corporate'
+        value: 'email'
+      }],
+      pagination2: {
+        sortBy: 'created_at',
+        descending: true
+      },
+      headers2: [{
+        text: 'Fecha',
+        value: 'created_at'
       }, {
-        text: 'Registros',
-        value: 'location.length'
+        text: 'Usuario',
+        align: 'left',
+        value: 'user.name'
+      }, {
+        text: 'Estatus',
+        value: 'status'
+      }, {
+        text: 'Latitud',
+        value: 'latitude'
+      }, {
+        text: 'Longitud',
+        value: 'longitude'
       }],
       selected: [],
+      selected2: [],
       users: [],
-      opened: false,
-      // default to Montreal to keep it simple
-      // change this to whatever makes sense
       center: {},
       position: {
         position: null
@@ -3001,17 +3023,39 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
       btnstart: null,
       btnend: null,
       btnact: false,
-      btnload: false
+      btnload: false,
+      allPositions: []
     };
   },
   created: function created() {
     this.getMapGeo();
+    this.getUsers2();
     this.getUsers();
   },
   mounted: function mounted() {
     this.geolocate();
   },
   methods: {
+    getUser2: function getUser2() {
+      this.markers = [];
+
+      for (var x = 0; x < this.selected2.length; x++) {
+        var obj = this.selected2[x];
+        this.markers.push({
+          name: obj.user.name,
+          lastName: obj.user.last_name,
+          document: obj.user.document,
+          user: obj.user_id,
+          date: obj.created_at,
+          window: true,
+          status: obj.status,
+          position: {
+            lat: parseFloat(obj.latitude),
+            lng: parseFloat(obj.longitude)
+          }
+        });
+      }
+    },
     getUser: function getUser() {
       this.markers = [];
 
@@ -3046,29 +3090,40 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
         console.log(error);
       });
     },
-    // receives a place object via the autocomplete component
-    geolocate: function geolocate() {
+    getUsers2: function getUsers2() {
       var _this2 = this;
 
+      this.markers = [];
+      this.allPositions = [];
+      axios.get('/mapUsers/' + this.startDate + '/' + this.endDate).then(function (response) {
+        _this2.allPositions = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    // receives a place object via the autocomplete component
+    geolocate: function geolocate() {
+      var _this3 = this;
+
       navigator.geolocation.getCurrentPosition(function (position) {
-        _this2.center = {
+        _this3.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
           status: 1
         };
-        _this2.position.position = _this2.center; // this.markers = [this.position,];
+        _this3.position.position = _this3.center; // this.markers = [this.position,];
       });
     },
     MapStart: function MapStart() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post('/map', this.center).then(function (response) {
-        _this3.getMapGeo();
+        _this4.getMapGeo();
 
-        if (_this3.center.status == 1) {
-          _this3.Swal('Se ha guardado tu hora de Llegada.');
-        } else if (_this3.center.status == 2) {
-          _this3.Swal('Se ha guardado tu hora de Salida.');
+        if (_this4.center.status == 1) {
+          _this4.Swal('Se ha guardado tu hora de Llegada.');
+        } else if (_this4.center.status == 2) {
+          _this4.Swal('Se ha guardado tu hora de Salida.');
         }
 
         console.log(response);
@@ -3077,7 +3132,7 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
       });
     },
     btnActualizar: function btnActualizar() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.btnload = true;
       this.btnstart = {
@@ -3085,44 +3140,44 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
         dark: true
       };
       setTimeout(function () {
-        return _this4.btnload = false, _this4.btnact = false;
+        return _this5.btnload = false, _this5.btnact = false;
       }, 2000);
       this.Swal('Puedes Registrar otra entrada el dia de Hoy');
     },
     getMapGeo: function getMapGeo() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('/map/show').then(function (response) {
         if (response.data != 'null' && response.data != 'cierre') {
-          _this5.btnstart = {
+          _this6.btnstart = {
             disabled: true,
             dark: false
           };
-          _this5.btnend = {
+          _this6.btnend = {
             disabled: false,
             dark: true
           };
-          _this5.center.status = 2;
+          _this6.center.status = 2;
         } else if (response.data == 'null') {
-          _this5.btnstart = {
+          _this6.btnstart = {
             disabled: false,
             dark: true
           };
-          _this5.btnend = {
+          _this6.btnend = {
             disabled: true,
             dark: false
           };
         } else if (response.data == 'cierre') {
-          _this5.btnstart = {
+          _this6.btnstart = {
             disabled: true,
             dark: false
           };
-          _this5.btnend = {
+          _this6.btnend = {
             disabled: true,
             dark: false
           };
-          _this5.btnact = true;
-          _this5.center.status = 1;
+          _this6.btnact = true;
+          _this6.center.status = 1;
         }
 
         ;
@@ -3138,6 +3193,20 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_0__, {
         showConfirmButton: false,
         timer: 2000
       });
+    }
+  },
+  watch: {
+    selected2: function selected2() {
+      this.getUser2();
+    },
+    startDate: function startDate() {
+      this.getUsers2();
+    },
+    endDate: function endDate() {
+      this.getUsers2();
+    },
+    selected: function selected() {
+      console.log(this.selected);
     }
   }
 });
@@ -71106,29 +71175,20 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-flex",
-        { attrs: { xs12: "", sm6: "", md6: "" } },
+        { attrs: { xs12: "", sm4: "", md4: "" } },
         [
           _c(
             "v-menu",
             {
               ref: "menuStartDate",
               attrs: {
-                "close-on-content-click": false,
+                "close-on-content-click": true,
                 "nudge-right": 40,
-                "return-value": _vm.startDate,
                 lazy: "",
                 transition: "scale-transition",
                 "offset-y": "",
                 "full-width": "",
                 "min-width": "290px"
-              },
-              on: {
-                "update:returnValue": function($event) {
-                  _vm.startDate = $event
-                },
-                "update:return-value": function($event) {
-                  _vm.startDate = $event
-                }
               },
               scopedSlots: _vm._u([
                 {
@@ -71170,49 +71230,16 @@ var render = function() {
             },
             [
               _vm._v(" "),
-              _c(
-                "v-date-picker",
-                {
-                  attrs: { "no-title": "", scrollable: "" },
-                  model: {
-                    value: _vm.startDate,
-                    callback: function($$v) {
-                      _vm.startDate = $$v
-                    },
-                    expression: "startDate"
-                  }
-                },
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { flat: "", color: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.menuStartDate = false
-                        }
-                      }
-                    },
-                    [_vm._v("Cancel")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { flat: "", color: "primary" },
-                      on: {
-                        click: function($event) {
-                          return _vm.$refs.menuStartDate.save(_vm.startDate)
-                        }
-                      }
-                    },
-                    [_vm._v("OK")]
-                  )
-                ],
-                1
-              )
+              _c("v-date-picker", {
+                attrs: { "no-title": "", scrollable: "", max: _vm.endDate },
+                model: {
+                  value: _vm.startDate,
+                  callback: function($$v) {
+                    _vm.startDate = $$v
+                  },
+                  expression: "startDate"
+                }
+              })
             ],
             1
           )
@@ -71222,22 +71249,21 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-flex",
-        { attrs: { xs12: "", sm6: "", md6: "" } },
+        { attrs: { xs12: "", sm4: "", md4: "" } },
         [
           _c(
             "v-menu",
             {
               ref: "menuEndDate",
               attrs: {
-                "close-on-content-click": true,
+                "close-on-content-click": false,
                 "nudge-right": 40,
                 "return-value": _vm.endDate,
                 lazy: "",
                 transition: "scale-transition",
                 "offset-y": "",
                 "full-width": "",
-                "min-width": "290px",
-                min: _vm.endDate
+                "min-width": "290px"
               },
               on: {
                 "update:returnValue": function($event) {
@@ -71290,7 +71316,12 @@ var render = function() {
               _c(
                 "v-date-picker",
                 {
-                  attrs: { "no-title": "", scrollable: "" },
+                  attrs: {
+                    "no-title": "",
+                    scrollable: "",
+                    min: _vm.startDate,
+                    max: _vm.todayDate
+                  },
                   model: {
                     value: _vm.endDate,
                     callback: function($$v) {
@@ -71338,13 +71369,185 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
+        "v-flex",
+        { attrs: { xs12: "", sm4: "", md4: "" } },
+        [
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "primary", dark: "" },
+              on: {
+                click: function($event) {
+                  _vm.dialogFull = true
+                }
+              }
+            },
+            [_vm._v("Filtrar Usuarios")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
+          model: {
+            value: _vm.dialogFull,
+            callback: function($$v) {
+              _vm.dialogFull = $$v
+            },
+            expression: "dialogFull"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialogFull = false
+                        }
+                      }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [_vm._v("Filtro Usuarios")]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogFull = false
+                            }
+                          }
+                        },
+                        [_vm._v("Cerrar")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-title",
+                [
+                  _vm._v(
+                    "\n                Seleccionar Usuarios\n                "
+                  ),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "append-icon": "search",
+                      label: "Buscar",
+                      "single-line": "",
+                      "hide-details": ""
+                    },
+                    model: {
+                      value: _vm.search,
+                      callback: function($$v) {
+                        _vm.search = $$v
+                      },
+                      expression: "search"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  "rows-per-page-items": _vm.rows,
+                  headers: _vm.headers,
+                  items: _vm.users,
+                  search: _vm.search,
+                  "select-all": ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c(
+                          "td",
+                          [
+                            _c("v-checkbox", {
+                              attrs: { primary: "", "hide-details": "" },
+                              model: {
+                                value: props.selected,
+                                callback: function($$v) {
+                                  _vm.$set(props, "selected", $$v)
+                                },
+                                expression: "props.selected"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.last_name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.email))
+                        ])
+                      ]
+                    }
+                  }
+                ]),
+                model: {
+                  value: _vm.selected,
+                  callback: function($$v) {
+                    _vm.selected = $$v
+                  },
+                  expression: "selected"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-card",
         { staticClass: "w-100" },
         [
           _c(
             "v-card-title",
             [
-              _vm._v("\n            Seleccionar Usuarios\n            "),
+              _vm._v("\n            Seleccionar\n            "),
               _c("v-spacer"),
               _vm._v(" "),
               _c("v-text-field", {
@@ -71355,11 +71558,11 @@ var render = function() {
                   "hide-details": ""
                 },
                 model: {
-                  value: _vm.search,
+                  value: _vm.search2,
                   callback: function($$v) {
-                    _vm.search = $$v
+                    _vm.search2 = $$v
                   },
-                  expression: "search"
+                  expression: "search2"
                 }
               })
             ],
@@ -71370,11 +71573,17 @@ var render = function() {
             staticClass: "elevation-1",
             attrs: {
               "rows-per-page-items": _vm.rows,
-              headers: _vm.headers,
-              items: _vm.users,
-              search: _vm.search,
-              "item-key": "name",
+              headers: _vm.headers2,
+              items: _vm.allPositions,
+              pagination: _vm.pagination2,
+              search: _vm.search2,
+              "item-key": "id",
               "select-all": ""
+            },
+            on: {
+              "update:pagination": function($event) {
+                _vm.pagination2 = $event
+              }
             },
             scopedSlots: _vm._u([
               {
@@ -71383,13 +71592,6 @@ var render = function() {
                   return [
                     _c(
                       "td",
-                      {
-                        on: {
-                          click: function($event) {
-                            return _vm.getUser()
-                          }
-                        }
-                      },
                       [
                         _c("v-checkbox", {
                           attrs: { primary: "", "hide-details": "" },
@@ -71406,34 +71608,42 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-xs-left" }, [
-                      _vm._v(_vm._s(props.item.name))
+                      _vm._v(_vm._s(props.item.created_at))
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-xs-left" }, [
-                      _vm._v(_vm._s(props.item.last_name))
+                      _vm._v(
+                        _vm._s(props.item.user.name) +
+                          " " +
+                          _vm._s(props.item.user.last_name)
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-xs-left" }, [
-                      _vm._v(_vm._s(props.item.email))
+                      _vm._v(
+                        _vm._s(props.item.status == 1 ? "llegada" : "Salida")
+                      )
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "text-xs-center" }, [
-                      _vm._v(_vm._s(props.item.location.length))
+                    _c("td", { staticClass: "text-xs-left" }, [
+                      _vm._v(_vm._s(props.item.latitude))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-left" }, [
+                      _vm._v(_vm._s(props.item.longitude))
                     ])
                   ]
                 }
               }
             ]),
             model: {
-              value: _vm.selected,
+              value: _vm.selected2,
               callback: function($$v) {
-                _vm.selected = $$v
+                _vm.selected2 = $$v
               },
-              expression: "selected"
+              expression: "selected2"
             }
-          }),
-          _vm._v(" "),
-          _c("pre", [_vm._v(_vm._s(_vm.$data.selected))])
+          })
         ],
         1
       )

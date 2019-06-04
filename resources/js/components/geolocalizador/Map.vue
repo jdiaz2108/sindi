@@ -90,6 +90,7 @@
             })
             },
             showPosition: function(position) {
+                console.log('test');
                     this.center = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,

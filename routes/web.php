@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/mapUsers/{start}/{end}', 'MapGeoController@mapUsers');
+
+Route::get('/mapUsers', 'MapGeoController@getUsersWLocation');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -79,7 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::group(['middleware' => ['admin']], function () {
 
 		Route::get('/mapTest/{slug}', 'MapGeoController@mapTest');
-	 Route::get('/mapUsers', 'MapGeoController@mapUsers');
+	// Route::get('/mapUsers', 'MapGeoController@mapUsers');
 
 	 Route::get('/mapAdmin', 'MapGeoController@mapAdmin');
 
